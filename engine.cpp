@@ -9,9 +9,10 @@
 using namespace std;
 
 float fov = 10;
-float px = 0, py = 0, pz = 10, ord = 0.5;
-int menu;
-float pontos[100][3];
+float px = 0, py = fov/2, pz = fov/2, ord = 0.5, rato = 0, ratoIn;
+int menu, wsizex = 800, wsizey = 400;
+
+float pontos[1000][3];
 int npontos;
 
 void changeSize(int w, int h) {
@@ -149,6 +150,57 @@ void keys(int key_code, int x, int y) {
 	glutPostRedisplay();
 }
 
+void BotRato(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON) {
+		if (state == GLUT_DOWN) {
+			rato = 1;
+			ratoIn = x;
+		}
+		else if (state == GLUT_UP)
+			rato = 0;
+	}
+}
+
+void MovRato(int x, int y) {
+	if (rato == 1)
+		if (x < ratoIn) {
+			if (px>-fov && px <= 0 && pz >= 0 && pz <= fov) {
+				px -= (ord / 10);
+				pz -= (ord / 10);
+			}
+			else if (px >= -fov && px<0 && pz >= -fov && pz <= 0) {
+				px += (ord / 10);
+				pz -= (ord / 10);
+			}
+			else if (px >= 0 && px<fov && pz >= -fov && pz <= 0) {
+				px += (ord / 10);
+				pz += (ord / 10);
+			}
+			else if (px>0 && px <= fov && pz >= 0 && pz <= fov) {
+				px -= (ord / 10);
+				pz += (ord / 10);
+			}
+		}
+		else {
+			if (px >= 0 && px<fov && pz >= 0 && pz <= fov) {
+				px += (ord / 10);
+				pz -= (ord / 10);
+			}
+			else if (px>0 && px <= fov && pz >= -fov && pz <= 0) {
+				px -= (ord / 10);
+				pz -= (ord / 10);
+			}
+			else if (px>-fov && px <= 0 && pz >= -fov && pz <= 0) {
+				px -= (ord / 10);
+				pz += (ord / 10);
+			}
+			else if (px >= -fov && px<0 && pz >= 0 && pz <= fov) {
+				px += (ord / 10);
+				pz += (ord / 10);
+			}
+		}
+		glutPostRedisplay();
+}
 
 // write function to process menu events
 
@@ -174,12 +226,12 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(200, 50);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
 
 
 	//LER FICHEIRO!!!!
-	string line, saux, ficheiro = "box.3d";
+	string line, saux, ficheiro = "sphere.3d";
 	ifstream file(ficheiro);	
 	int iaux;
 
@@ -221,7 +273,8 @@ int main(int argc, char **argv) {
 
 	// put here the registration of the keyboard and menu callbacks
 	glutSpecialFunc(keys);
-
+	glutMouseFunc(BotRato);
+	glutMotionFunc(MovRato);
 
 	// put here the definition of the menu 
 
