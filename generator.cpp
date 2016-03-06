@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
-#include<string>
+#include <string>
 #include <iostream>
 #include <fstream>
 
@@ -123,30 +123,37 @@ void caixa(int x,int y , int z , string nome) {
 }
 
 
-void cone(int r, int h, int slices, string nome) {
+void cone(int rr, int hr, int slice, int stack, string nome) {
 	ofstream file(nome);
-	double alfa, alfa2;
-	double xx, yy, zz;
-	for (int i = 0; i < slices; i++) {			//CONE!!!!
-		alfa = i*(2 * M_PI) / slices;
-		alfa2 = (i + 1)*(2 * M_PI) / slices;
-		yy = h / 2;
-		file << 0.0f << "," << -yy << "," << 0.0f << endl;
-		xx = r * (sin(alfa2));
-		zz = r * cos(alfa2);
-		file << xx << "," << -yy << "," << zz << endl;
-		xx = r * (sin(alfa));
-		zz = r * cos(alfa);
+	float alfa;
+	float r = rr, h = hr;
+	float l = sqrt(pow(h, 2) + pow(r, 2)) / stack, t = r / stack;
 
-		file << xx << "," << -yy << "," << zz << endl;
+	for (int i = 0; i < stack; i++) {		//CONE!!!
+		for (int j = 0; j < slice; j++) {
+			alfa = j*(2 * M_PI) / slice;
+			if (i == 0) {
+				file << 0.0f << "," << i*l << "," << 0.0f << endl;
+				file << r * (sin(alfa + 2 * M_PI / slice)) << "," << i*l << "," << r * cos(alfa + 2 * M_PI / slice) << endl;
+				file << r*(sin(alfa)) << "," << i*l << "," << r*cos(alfa) << endl;
+			}
+			if (i < stack - 1) {
+				file << (r - ((i + 1)*t))*(sin(alfa + 2 * M_PI / slice)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t))*cos(alfa + 2 * M_PI / slice) << endl;
+				file << (r - ((i + 1)*t)) * (sin(alfa)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t)) * cos(alfa) << endl;
+				file << (r - (i*t)) * (sin(alfa)) << "," << i*l << "," << (r - (i*t)) * cos(alfa) << endl;
 
-		file << 0.0f << "," << yy << "," << 0.0f << endl;
-		file << xx << "," << -yy << "," << zz << endl;
-		xx = r * (sin(alfa2));
-		zz = r * cos(alfa2);
-		file << xx << "," << -yy << "," << zz << endl;
-	
+				file << (r - (i*t)) * (sin(alfa)) << "," << i*l << "," << (r - (i*t)) * cos(alfa) << endl;
+				file << (r - (i*t))*(sin(alfa + 2 * M_PI / slice)) << "," << i*l << "," << (r - (i*t))*cos(alfa + 2 * M_PI / slice) << endl;
+				file << (r - ((i + 1)*t))*(sin(alfa + 2 * M_PI / slice)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t))*cos(alfa + 2 * M_PI / slice) << endl;
+			}
+			else {
+				file << (r - (i*t)) * (sin(alfa)) << "," << i*l << "," << (r - (i*t)) * cos(alfa) << endl;
+				file << (r - (i*t))*(sin(alfa + 2 * M_PI / slice)) << "," << i*l << "," << (r - (i*t))*cos(alfa + 2 * M_PI / slice) << endl;
+				file << 0.0f << "," << (i + 1)*l << "," << 0.0f << endl;
+			}
+		}
 	}
+	
 	file.close();
 }
 void esfera(int r,int slice,int stack, string nome) {
@@ -224,8 +231,8 @@ int main(int argc, char **argv) {
 			caixa(atoi(argv[2]), atoi(argv[3]),atoi( argv[4]), argv[5]);
 		}
 		else if (!str4.compare(argv[1])) {
-			printf(" faz uma %s  com %d raio %d altura e %d fatias chamada %s", argv[1], atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), argv[5]);
-			cone(atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), argv[5]);
+			printf(" faz uma %s  com %d raio %d altura %d stacks e %d fatias chamada %s", argv[1], atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), argv[6]);
+			cone(atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), argv[6]);
 		}
 		else printf("Essa figura nao  possivel");
 	}

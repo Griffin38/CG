@@ -13,11 +13,11 @@ using namespace std;
 using namespace tinyxml2;
 
 float fov = 10;
-float px = 0, py = fov/2, pz = fov/2, ord = 0.5, rato = 0, ratoIn;
+float px = 0, py = fov/2, pz = fov/2, ord = 0.5, rato = 0, ratoIn, angle = 0.0;
 int menu, wsizex = 800, wsizey = 400;
 
-float pontos[1000][3];
-int npontos;
+float pontos[50000][3];
+int npontos = 0;
 
 void changeSize(int w, int h) {
 
@@ -56,7 +56,7 @@ void renderScene(void) {
 		0.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
-
+	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
 
@@ -81,61 +81,13 @@ void renderScene(void) {
 void keys(int key_code, int x, int y) {
 	switch (key_code) {
 	case GLUT_KEY_LEFT:
-		if (px>-fov && px <= 0 && pz >= 0 && pz <= fov) {
-			px -= ord;
-			pz -= ord;
-		}
-		else if (px >= -fov && px<0 && pz >= -fov && pz <= 0) {
-			px += ord;
-			pz -= ord;
-		}
-		else if (px >= 0 && px<fov && pz >= -fov && pz <= 0) {
-			px += ord;
-			pz += ord;
-		}
-		else if (px>0 && px <= fov && pz >= 0 && pz <= fov) {
-			px -= ord;
-			pz += ord;
-		}
-
+		angle += 5*ord;
 		break;
 	case GLUT_KEY_RIGHT:
-		if (px >= 0 && px<fov && pz >= 0 && pz <= fov) {
-			px += ord;
-			pz -= ord;
-		}
-		else if (px>0 && px <= fov && pz >= -fov && pz <= 0) {
-			px -= ord;
-			pz -= ord;
-		}
-		else if (px>-fov && px <= 0 && pz >= -fov && pz <= 0) {
-			px -= ord;
-			pz += ord;
-		}
-		else if (px >= -fov && px<0 && pz >= 0 && pz <= fov) {
-			px += ord;
-			pz += ord;
-		}
+		angle -= 5*ord;
 		break;
 	case GLUT_KEY_UP: py += ord; break;
 	case GLUT_KEY_DOWN: py -= ord; break;
-	case GLUT_KEY_F1: 
-		fov += ord; 		
-		if (px > 0 && pz > 0 && py > 0) {
-			px += (ord / 3);
-			pz += (ord / 3);
-			py += (ord / 3);
-		}
-		break;
-	case GLUT_KEY_F2:
-		fov -= ord;
-		if (px > 0 && pz > 0 && py > 0) {
-			px -= (ord / 3);
-			pz -= (ord / 3);
-			py -= (ord / 3);
-		}
-		break;
-
 	}
 	glutPostRedisplay();
 }
@@ -218,7 +170,6 @@ void leituraM(string nome) {
 
 
 	if (file.is_open()) {
-		npontos = 0;
 		while (getline(file, line))
 		{
 
@@ -267,6 +218,7 @@ XMLDocument docxml;
 		}
 		else cout << "Nao foi encontrado o xml" << endl;
 }
+
 int main(int argc, char **argv) {
 
 	// init GLUT and the window
@@ -275,6 +227,7 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(200, 50);
 	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
 if(argc > 1){
 	lXML(argv[1]);
