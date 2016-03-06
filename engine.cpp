@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
-#include "tinyxml\tinyxml.h"
-#include "tinyxml\tinyxml.cpp"
+#include "tinyxml2/tinyxml2.h"
+
 
 #include <string>
 
@@ -250,8 +250,8 @@ void leituraM(string nome) {
 }
 
 void lXML(string nome) {
-	TiXmlDocument docxml;
-	if (docxml.LoadFile(nome.c_str()))
+XMLDocument docxml;
+		/*if (docxml.LoadFile(nome.c_str()))
 	{
 		
 		     
@@ -262,7 +262,7 @@ void lXML(string nome) {
 			string model = elem->Attribute("model");       //retorna valor em model=""
 			leituraM(model);
 		}
-	}
+	}*/
 }
 int main(int argc, char **argv) {
 
@@ -273,7 +273,7 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
 
-	lXML(argv[1]);
+	//lXML(argv[1]);
 
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
