@@ -1,12 +1,5 @@
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <stdio.h>
-#include <string>
-#include <iostream>
-#include <fstream>
-
-using namespace std;
+#include "Generator.h"
 
 
 
