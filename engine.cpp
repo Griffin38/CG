@@ -1,9 +1,12 @@
-#include <GL/glut.h>
+﻿#include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
+#include "tinyxml\tinyxml.h"
+#include "tinyxml\tinyxml.cpp"
+
 #include <string>
 
 using namespace std;
@@ -64,21 +67,7 @@ void renderScene(void) {
 		glVertex3f(pontos[jz][0], pontos[jz][1], pontos[jz][2]);
 	}
 	glEnd();
-	/*
-	glColor3f(0, 0, 1);
-	glVertex3f(1.0f, 0.0f, 1.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-
-	glColor3f(0, 1, 1);
-	glVertex3f(-1.0f, 0.0f, -1.0f);
-	glVertex3f(-1.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-
-	glColor3f(1, 0, 1);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(-1.0f, 0.0f, -1.0f);*/	
+	
 
 	// End of frame
 	glutSwapBuffers();
@@ -219,32 +208,23 @@ void menu_op(int id_op) {
 	glutPostRedisplay();
 }
 
-
-int main(int argc, char **argv) {
-
-	// init GLUT and the window
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(200, 50);
-	glutInitWindowSize(wsizex, wsizey);
-	glutCreateWindow("CG@DI-UM");
-
+void leituraM(string nome) {
 
 	//LER FICHEIRO!!!!
-	string line, saux, ficheiro = "sphere.3d";
-	ifstream file(ficheiro);	
+	string line, saux;
+	ifstream file(nome);
 	int iaux;
 
 
-	if (file.is_open()){
+	if (file.is_open()) {
 		npontos = 0;
 		while (getline(file, line))
-		{			
-			
+		{
+
 			iaux = line.find(",");
 			saux = line.substr(0, iaux);
 			pontos[npontos][0] = atof(saux.c_str());
-			line.erase(0, iaux + 1);			
+			line.erase(0, iaux + 1);
 
 			iaux = line.find(",");
 			saux = line.substr(0, iaux);
@@ -255,7 +235,7 @@ int main(int argc, char **argv) {
 			saux = line.substr(0, iaux);
 			pontos[npontos][2] = atof(saux.c_str());
 			line.erase(0, iaux + 1);
-			
+
 			//cout << pontos[npontos][0] << "," << pontos[npontos][1] << "," << pontos[npontos][2] << endl;
 			npontos++;
 		}
@@ -266,6 +246,34 @@ int main(int argc, char **argv) {
 		cout << "Nao foi possivel ler o ficheiro" << endl;
 	}
 	//END OF LER FICHEIRO!!!!!
+
+}
+
+void lXML(string nome) {
+	TiXmlDocument docxml;
+	if (docxml.LoadFile(nome.c_str()))
+	{
+		
+		     
+		TiXmlElement* root = docxml.FirstChildElement("scene"); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
+		TiXmlElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
+
+		for (elem = root->FirstChildElement(); elem; elem = elem->NextSiblingElement()) {
+			string model = elem->Attribute("model");       //retorna valor em model=""
+			leituraM(model);
+		}
+	}
+}
+int main(int argc, char **argv) {
+
+	// init GLUT and the window
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(200, 50);
+	glutInitWindowSize(wsizex, wsizey);
+	glutCreateWindow("CG@DI-UM");
+
+	lXML(argv[1]);
 
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
