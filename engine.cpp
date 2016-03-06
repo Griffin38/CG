@@ -4,12 +4,13 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 
 
 #include <string>
 
 using namespace std;
+using namespace tinyxml2;
 
 float fov = 10;
 float px = 0, py = fov/2, pz = fov/2, ord = 0.5, rato = 0, ratoIn;
@@ -251,18 +252,20 @@ void leituraM(string nome) {
 
 void lXML(string nome) {
 XMLDocument docxml;
-		/*if (docxml.LoadFile(nome.c_str()))
+		if (!docxml.LoadFile(nome.c_str()))
 	{
 		
 		     
-		TiXmlElement* root = docxml.FirstChildElement("scene"); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
-		TiXmlElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
+	XMLElement* root = docxml.RootElement(); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
+	XMLElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
 
-		for (elem = root->FirstChildElement(); elem; elem = elem->NextSiblingElement()) {
-			string model = elem->Attribute("model");       //retorna valor em model=""
+		
+	for (elem = root->FirstChildElement(); elem; elem = elem->NextSiblingElement()) {
+			string model = elem->Attribute("file");       //retorna valor em model=""
 			leituraM(model);
 		}
-	}*/
+		}
+		else cout << "Nao foi encontrado o xml" << endl;
 }
 int main(int argc, char **argv) {
 
@@ -272,9 +275,10 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(200, 50);
 	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
-
-	//lXML(argv[1]);
-
+	
+if(argc > 1){
+	lXML(argv[1]);
+}
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
