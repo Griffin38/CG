@@ -5,6 +5,10 @@
 #include <fstream>
 #include <iostream>
 #include "tinyxml2.h"
+#include<Type.h>
+#include<Transformation.h>
+#include<Point.h>
+#include<Model.h>
 
 
 #include <string>
@@ -209,12 +213,9 @@ XMLDocument docxml;
 		     
 	XMLElement* root = docxml.RootElement(); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
 	XMLElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
-
+	Transformation t = Transformation::Transformation();
 		
-	for (elem = root->FirstChildElement(); elem; elem = elem->NextSiblingElement()) {
-			string model = elem->Attribute("file");       //retorna valor em model=""
-			leituraM(model);
-		}
+	Modelos(root, t);
 		}
 		else cout << "Nao foi encontrado o xml" << endl;
 }
