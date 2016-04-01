@@ -16,8 +16,9 @@
 using namespace std;
 using namespace tinyxml2;
 
-float fov = 10;
-float px = 0, py = fov / 2, pz = fov / 2, ord = 0.5, rato = 0, ratoIn, angle = 0.0;
+float xx = 0, yy = 0, zz = 0, angle = 0.0f;
+float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
+float camX, camY = 10.0f, camZ;
 int menu, wsizex = 800, wsizey = 400;
 
 vector<Model> ListaM;
@@ -48,13 +49,109 @@ void changeSize(int w, int h) {
 }
 
 
+//CAMERA
+void sphericalToCartesian() {
+
+	camX = radius * cos(beta) * sin(alpha);
+	camY = radius * sin(beta);
+	camZ = radius * cos(beta) * cos(alpha);
+}
+//render scnene 
+
+
+void renderScene(void) {
+	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	gluLookAt(camX, camY, camZ,
+		0.0, 0.0, 0.0,
+		0.0f, 1.0f, 0.0f);
+
+	glTranslatef(xx, yy, zz);
+
+	glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	int n_models = ListaM.size(), n_ptos;
+	vector <Point> lptos;
+
+	for (int i = 0; i < n_models; i++) {
+		n_ptos = ListaM[i].getPontos().size();
+		lptos = ListaM[i].getPontos();
+		Transformation tr = ListaM[i].getTransformacao();
+		Type tipo;
+
+
+		glPushMatrix();
+		if (!tr.trasnformacaoVazia()) {
+
+			tipo = tr.getRotacao();
+			if (!tipo.tipoVazio()) { glRotatef(tipo.getTAng(), tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+
+			tipo = tr.getTranslacao();
+			if (!tipo.tipoVazio()) { glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+
+			tipo = tr.getEscala();
+			if (!tipo.tipoVazio()) { glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+
+
+		}
+
+		glBegin(GL_TRIANGLES);
+		for (int j = 0; j < n_ptos; j++) {
+			glVertex3f(lptos[j].getX(), lptos[j].getY(), lptos[j].getZ());
+		}
+		glEnd();
+		glPopMatrix();
+	}
+
+
+
+	glutPostRedisplay();
+	glutSwapBuffers();
+}
+
 
 
 
 
 // write function to process keyboard events
 
+void keys(int key, int xx, int yy)
+{
+	switch (key) {
 
+	case GLUT_KEY_RIGHT:
+		alpha -= 0.1; break;
+
+	case GLUT_KEY_LEFT:
+		alpha += 0.1; break;
+
+	case GLUT_KEY_UP:
+		beta += 0.1f;
+		if (beta > 1.5f)
+			beta = 1.5f;
+		break;
+
+	case GLUT_KEY_DOWN:
+		beta -= 0.1f;
+		if (beta < -1.5f)
+			beta = -1.5f;
+		break;
+
+	case GLUT_KEY_PAGE_UP: radius -= 1.5f;
+		if (radius < 0.1f)
+			radius = 0.1f;
+		break;
+
+	case GLUT_KEY_PAGE_DOWN: radius += 1.5f; break;
+
+	}
+	sphericalToCartesian();
+	glutPostRedisplay();
+}
 
 
 // write function to process menu events
@@ -207,26 +304,31 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 	//ver se tem mais filhos
 
 	if (grupo->FirstChildElement("group")) {
+		cout << "processar " << grupo->Attribute("name") << endl;
 		Modelos(grupo->FirstChildElement("group"), temp);
 	}
 	//ver se tem irmaos
 	if (grupo->NextSiblingElement("group")) {
+		cout << "processar " << grupo->Attribute("name") << endl;
 		Modelos(grupo->NextSiblingElement("group"), tdefault);
 	}
 
 }
 void lXML(string nome) {
+	
 	XMLDocument docxml;
+	cout << "A tentar ler  o ficheiro " << nome.c_str() << endl;
 	if (!docxml.LoadFile(nome.c_str()))
 	{
-
+		cout << " A Ler o ficheiro " << nome.c_str() << endl;
 
 		XMLElement* root = docxml.RootElement(); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
 		XMLElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
 		Transformation t = Transformation::Transformation(); // transformaçao 
 		
 		if (root != NULL) {
-			Modelos(root->FirstChildElement("group"), t); // manda o primeiro grupo para procurar os modelos 
+			cout << "A começar a desenhar ->  " << root->Attribute("name") << endl;
+			Modelos(root->FirstChildElement("group"), t);  // manda o primeiro grupo para procurar os modelos 
 
 		}
 		
@@ -243,18 +345,21 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
+	/*
 	if (argc > 1) {
-		lXML(argv[1]);
-	}
+
+			lXML(argv[1]);
+		}*/ lXML("test.xml");
+
+
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 	// put here the registration of the keyboard and menu callbacks
 	glutSpecialFunc(keys);
-	glutMouseFunc(BotRato);
-	glutMotionFunc(MovRato);
+	//glutMouseFunc(BotRato);
+	//glutMotionFunc(MovRato);
 
 	// put here the definition of the menu 
 
