@@ -20,8 +20,7 @@ float fov = 10;
 float px = 0, py = fov / 2, pz = fov / 2, ord = 0.5, rato = 0, ratoIn, angle = 0.0;
 int menu, wsizex = 800, wsizey = 400;
 
-float pontos[50000][3];
-int npontos = 0;
+vector<Model> ListaM;
 
 void changeSize(int w, int h) {
 
@@ -49,104 +48,14 @@ void changeSize(int w, int h) {
 }
 
 
-void renderScene(void) {
 
-	// clear buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// set the camera
-	glLoadIdentity();
-	gluLookAt(px, py, pz,
-		0.0, 0.0, 0.0,
-		0.0f, 1.0f, 0.0f);
-
-	glRotatef(angle, 0.0f, 1.0f, 0.0f);
-
-	// put the geometric transformations here
-
-
-	// put drawing instructions here
-	glBegin(GL_TRIANGLES);
-	glColor3f(0, 0, 1);
-	for (int jz = 0; jz < npontos; jz++) {
-		glVertex3f(pontos[jz][0], pontos[jz][1], pontos[jz][2]);
-	}
-	glEnd();
-
-
-	// End of frame
-	glutSwapBuffers();
-}
 
 
 
 // write function to process keyboard events
 
-void keys(int key_code, int x, int y) {
-	switch (key_code) {
-	case GLUT_KEY_LEFT:
-		angle += 5 * ord;
-		break;
-	case GLUT_KEY_RIGHT:
-		angle -= 5 * ord;
-		break;
-	case GLUT_KEY_UP: py += ord; break;
-	case GLUT_KEY_DOWN: py -= ord; break;
-	}
-	glutPostRedisplay();
-}
 
-void BotRato(int button, int state, int x, int y) {
-	if (button == GLUT_LEFT_BUTTON) {
-		if (state == GLUT_DOWN) {
-			rato = 1;
-			ratoIn = x;
-		}
-		else if (state == GLUT_UP)
-			rato = 0;
-	}
-}
 
-void MovRato(int x, int y) {
-	if (rato == 1)
-		if (x < ratoIn) {
-			if (px>-fov && px <= 0 && pz >= 0 && pz <= fov) {
-				px -= (ord / 10);
-				pz -= (ord / 10);
-			}
-			else if (px >= -fov && px<0 && pz >= -fov && pz <= 0) {
-				px += (ord / 10);
-				pz -= (ord / 10);
-			}
-			else if (px >= 0 && px<fov && pz >= -fov && pz <= 0) {
-				px += (ord / 10);
-				pz += (ord / 10);
-			}
-			else if (px>0 && px <= fov && pz >= 0 && pz <= fov) {
-				px -= (ord / 10);
-				pz += (ord / 10);
-			}
-		}
-		else {
-			if (px >= 0 && px<fov && pz >= 0 && pz <= fov) {
-				px += (ord / 10);
-				pz -= (ord / 10);
-			}
-			else if (px>0 && px <= fov && pz >= -fov && pz <= 0) {
-				px -= (ord / 10);
-				pz -= (ord / 10);
-			}
-			else if (px>-fov && px <= 0 && pz >= -fov && pz <= 0) {
-				px -= (ord / 10);
-				pz += (ord / 10);
-			}
-			else if (px >= -fov && px<0 && pz >= 0 && pz <= fov) {
-				px += (ord / 10);
-				pz += (ord / 10);
-			}
-		}
-		glutPostRedisplay();
-}
 
 // write function to process menu events
 
@@ -165,49 +74,145 @@ void menu_op(int id_op) {
 	glutPostRedisplay();
 }
 
-void leituraM(string nome) {
-
+bool leituraM(string nome , Model m) {
+	bool aux;
 	//LER FICHEIRO!!!!
 	string line, saux;
 	ifstream file(nome);
 	int iaux;
+	float x, y, z;
 
-
-	if (file.is_open()) {
+	if (file.is_open()) {  //se o ficheiro existir
 		while (getline(file, line))
 		{
-
+			//x 
 			iaux = line.find(",");
 			saux = line.substr(0, iaux);
-			pontos[npontos][0] = atof(saux.c_str());
+			 x = atof(saux.c_str());
 			line.erase(0, iaux + 1);
-
+			//Y
 			iaux = line.find(",");
 			saux = line.substr(0, iaux);
-			pontos[npontos][1] = atof(saux.c_str());
+			 y = atof(saux.c_str());
 			line.erase(0, iaux + 1);
-
+			//Z
 			iaux = line.find(",");
 			saux = line.substr(0, iaux);
-			pontos[npontos][2] = atof(saux.c_str());
+			 z = atof(saux.c_str());
 			line.erase(0, iaux + 1);
 
-			//cout << pontos[npontos][0] << "," << pontos[npontos][1] << "," << pontos[npontos][2] << endl;
-			npontos++;
+			//add ponto ao modelo
+			Point p = Point(x, y, z);
+
+			m.adicionaPonto(p);
+		
 		}
-		cout << npontos << endl;
+		
+		file.close();
+		aux = true;
 	}
 	else
 	{
 		cout << "Nao foi possivel ler o ficheiro" << endl;
+		aux = false;
 	}
 	//END OF LER FICHEIRO!!!!!
-
+	return aux;
 }
 
-void Modelos(XMLElement* scene, Transformation tdefault) {
+void Modelos(XMLElement* grupo, Transformation tdefault) {
 	Transformation temp;
-	Type tipo;
+	Type tipoN;
+
+	//ver se tem filhos
+	if (strcmp(grupo->FirstChildElement()->Value(), "group") == 0) {
+		grupo = grupo->FirstChildElement();
+	}
+
+
+	//percorrer os filhos ( atributos) ate aos modelos 
+
+	for (XMLElement* filho = grupo->FirstChildElement(); strcmp(filho->Value(), "models") != 0;filho = filho->NextSiblingElement() ) {
+		
+		//rotate
+		if (strcmp(filho->Value(), "rotate") == 0) {
+			float tx, ty, tz,tang;
+
+			if (filho->Attribute("angle") == NULL) { tang = 0; }
+			else { tang = stof(filho->Attribute("Z")); }
+
+			if (filho->Attribute("X") == NULL) { tx = 0; }
+			else { tx = stof(filho->Attribute("X")); }
+
+			if (filho->Attribute("Y") == NULL) { ty = 0; }
+			else { ty = stof(filho->Attribute("Y")); }
+
+			if (filho->Attribute("Z") == NULL) { tz = 0; }
+			else { tz = stof(filho->Attribute("Z")); }
+			
+			Type tt = tdefault.getRotacao();
+			tipoN = Type::Type(tang + tt.getTAng(),tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			temp.setRotacao(tipoN);
+
+		}
+
+		//scale 
+		if (strcmp(filho->Value(), "scale") == 0) {
+
+			float tx, ty, tz;
+
+			if (filho->Attribute("X") == NULL) { tx = 0; }
+			else { tx = stof(filho->Attribute("X")); }
+
+			if (filho->Attribute("Y") == NULL) { ty = 0; }
+			else { ty = stof(filho->Attribute("Y")); }
+
+			if (filho->Attribute("Z") == NULL) { tz = 0; }
+			else { tz = stof(filho->Attribute("Z")); }
+
+			Type tt = tdefault.getEscala();
+			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			temp.setEscala(tipoN);
+		}
+
+		//translate 
+		if (strcmp(filho->Value(), "translate") == 0) {
+
+			float tx, ty, tz;
+
+			if (filho->Attribute("X") == NULL) { tx = 0; }
+			else { tx = stof(filho->Attribute("X")); }
+
+			if (filho->Attribute("Y") == NULL) { ty = 0; }
+			else { ty = stof(filho->Attribute("Y")); }
+
+			if (filho->Attribute("Z") == NULL) { tz = 0; }
+			else { tz = stof(filho->Attribute("Z")); }
+
+			Type tt = tdefault.getTranslacao();
+			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			temp.setTranslacao(tipoN);
+		}
+	}
+
+	//percorrer os modelos do filho 
+	for (XMLElement* modelo = grupo->FirstChildElement("models")->FirstChildElement("model"); modelo; modelo = modelo->NextSiblingElement("model")) {
+		Model m (modelo->Attribute("file"));
+		if (leituraM(m.getNomeModelo(), m)) {
+			//escrever os modelos
+			m.setTransformacao(temp);
+			ListaM.push_back(m);
+		}
+	}
+	//ver se tem mais filhos
+
+	if (grupo->FirstChildElement("group")) {
+		Modelos(grupo->FirstChildElement("group"), temp);
+	}
+	//ver se tem irmaos
+	if (grupo->NextSiblingElement("group")) {
+		Modelos(grupo->NextSiblingElement("group"), tdefault);
+	}
 
 }
 void lXML(string nome) {
@@ -218,11 +223,15 @@ void lXML(string nome) {
 
 		XMLElement* root = docxml.RootElement(); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
 		XMLElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
-		Transformation t = Transformation::Transformation();
+		Transformation t = Transformation::Transformation(); // transformaçao 
+		
+		if (root != NULL) {
+			Modelos(root->FirstChildElement("group"), t); // manda o primeiro grupo para procurar os modelos 
 
-		Modelos(root, t);
+		}
+		
 	}
-	else cout << "Nao foi encontrado o xml" << endl;
+	else cout << "Nao foi encontrado o xml" << endl; // nao existe o ficheiro
 }
 
 int main(int argc, char **argv) {
