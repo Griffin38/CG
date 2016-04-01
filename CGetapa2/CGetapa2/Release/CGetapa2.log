@@ -1,0 +1,13 @@
+﻿  Engine.cpp
+Engine.cpp(34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(103): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(182): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(187): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(192): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(220): warning C4101: 'elem': unreferenced local variable
+  Generating code
+  39 of 415 functions ( 9.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    35 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  CGetapa2.vcxproj -> c:\users\pedro\documents\visual studio 2015\Projects\CGetapa2\Release\CGetapa2.exe

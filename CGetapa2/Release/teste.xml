@@ -1,0 +1,26 @@
+<scene name ="Sistema Solar">
+	<group name ="Sun">
+		<scale X="1" Y ="1" z="1" />
+		<models>
+<model file ="sphere.3d" />
+</models>
+
+<group name = "palneta1">
+		<scale X="0.7" Y ="0.7" z="0.6" />
+		<translate X="10" Y ="0" z="0" />
+		<rotate angle="45" X="1" Y="1" Z="1"/>
+		<models>
+<model file ="sphere.3d" />
+</models>
+	</group>
+<group  name = "palneta2">
+		<scale X="1" Y ="1" z="1" />
+		<translate X="20" Y ="0" z="0" />
+		<rotate angle="35" X="1" Y="1" Z="1"/>
+		<models>
+<model file ="sphere.3d" />
+</models>
+	</group>
+
+</group>
+</scene>
