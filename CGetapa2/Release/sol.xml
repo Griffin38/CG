@@ -1,0 +1,10 @@
+	<scene name="Sistema Solar">
+	<group name="Sun">
+	 <scale X="1" Y="1" Z="1" />
+	  <models>
+		<model file="sphere.3d" />
+	  </models>
+
+		
+	</group>
+	</scene>

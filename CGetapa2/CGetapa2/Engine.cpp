@@ -76,35 +76,47 @@ void renderScene(void) {
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	int n_models = ListaM.size(), n_ptos;
 	vector <Point> lptos;
-
+	//cout << "Modelos" << n_models << endl;
 	for (int i = 0; i < n_models; i++) {
-		n_ptos = ListaM[i].getPontos().size();
 		lptos = ListaM[i].getPontos();
+		n_ptos = ListaM[i].getPontos().size();
+		//cout << "Pontos " << n_ptos << endl;
 		Transformation tr = ListaM[i].getTransformacao();
 		Type tipo;
-
+		if(n_ptos > 0 ){
 
 		glPushMatrix();
 		if (!tr.trasnformacaoVazia()) {
+			
 
 			tipo = tr.getRotacao();
-			if (!tipo.tipoVazio()) { glRotatef(tipo.getTAng(), tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+			if (!tipo.tipoVazio()) {
+
+				glRotatef(tipo.getTAng(), tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
 			tipo = tr.getTranslacao();
-			if (!tipo.tipoVazio()) { glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+			if (!tipo.tipoVazio()) { 
+				
+				glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
 			tipo = tr.getEscala();
-			if (!tipo.tipoVazio()) { glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+			if (!tipo.tipoVazio()) {
+			
+				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
 
 		}
-
+		
 		glBegin(GL_TRIANGLES);
 		for (int j = 0; j < n_ptos; j++) {
+			//cout << "x " << lptos[j].getX() << " y " << lptos[j].getY() << " z" << lptos[j].getZ() << endl;
 			glVertex3f(lptos[j].getX(), lptos[j].getY(), lptos[j].getZ());
+			
 		}
 		glEnd();
 		glPopMatrix();
+		}
+		
 	}
 
 
@@ -171,50 +183,50 @@ void menu_op(int id_op) {
 	glutPostRedisplay();
 }
 
-bool leituraM(string nome , Model m) {
+int leituraM(string nome , Model& m) {
+
+
 	bool aux;
 	//LER FICHEIRO!!!!
-	string line, saux;
+	string line, saux, delimiter  = ",";
 	ifstream file(nome);
 	int iaux;
 	float x, y, z;
 
-	if (file.is_open()) {  //se o ficheiro existir
-		while (getline(file, line))
-		{
-			//x 
-			iaux = line.find(",");
+	if (file.is_open()) {
+		while (getline(file, line)) {
+			iaux = line.find(delimiter);
 			saux = line.substr(0, iaux);
-			 x = atof(saux.c_str());
-			line.erase(0, iaux + 1);
-			//Y
-			iaux = line.find(",");
-			saux = line.substr(0, iaux);
-			 y = atof(saux.c_str());
-			line.erase(0, iaux + 1);
-			//Z
-			iaux = line.find(",");
-			saux = line.substr(0, iaux);
-			 z = atof(saux.c_str());
-			line.erase(0, iaux + 1);
-
-			//add ponto ao modelo
-			Point p = Point(x, y, z);
-
-			m.adicionaPonto(p);
+			x= atof(saux.c_str());
+			line.erase(0, iaux + delimiter.length());
 		
+
+			iaux = line.find(delimiter);
+			saux = line.substr(0, iaux);
+			y = atof(saux.c_str());
+			line.erase(0, iaux + delimiter.length());
+		
+
+			iaux = line.find(delimiter);
+			saux = line.substr(0, iaux);
+			z = atof(saux.c_str());
+			line.erase(0, iaux + delimiter.length());
+			
+
+			Point po(x,y,z);
+			m.adicionaPonto(po);
+
+			
 		}
-		
 		file.close();
-		aux = true;
+		return 1;
 	}
-	else
-	{
-		cout << "Nao foi possivel ler o ficheiro" << endl;
-		aux = false;
+	else {
+		cout << "Nao foi possivel ler o arquivo" << endl;
+		return 0;
 	}
 	//END OF LER FICHEIRO!!!!!
-	return aux;
+	
 }
 
 void Modelos(XMLElement* grupo, Transformation tdefault) {
@@ -294,23 +306,27 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 
 	//percorrer os modelos do filho 
 	for (XMLElement* modelo = grupo->FirstChildElement("models")->FirstChildElement("model"); modelo; modelo = modelo->NextSiblingElement("model")) {
-		Model m (modelo->Attribute("file"));
-		if (leituraM(m.getNomeModelo(), m)) {
+		Model m (grupo->Attribute("name"));
+		if (leituraM(modelo->Attribute("file"), m)) {
 			//escrever os modelos
 			m.setTransformacao(temp);
 			ListaM.push_back(m);
+			cout << "adicionado " << grupo->Attribute("name") << endl;
+			
 		}
 	}
 	//ver se tem mais filhos
 
 	if (grupo->FirstChildElement("group")) {
-		cout << "processar " << grupo->Attribute("name") << endl;
-		Modelos(grupo->FirstChildElement("group"), temp);
+		XMLElement *son = grupo->FirstChildElement("group");
+		cout << "processar filho " << son->Attribute("name") << endl;
+		Modelos(son, temp);
 	}
 	//ver se tem irmaos
 	if (grupo->NextSiblingElement("group")) {
-		cout << "processar " << grupo->Attribute("name") << endl;
-		Modelos(grupo->NextSiblingElement("group"), tdefault);
+		XMLElement *brotha = grupo->NextSiblingElement("group");
+		cout << "processar irmao " << brotha->Attribute("name") << endl;
+		Modelos(brotha, tdefault);
 	}
 
 }
@@ -318,7 +334,9 @@ void lXML(string nome) {
 	
 	XMLDocument docxml;
 	cout << "A tentar ler  o ficheiro " << nome.c_str() << endl;
-	if (!docxml.LoadFile(nome.c_str()))
+	
+	int loadOkay = docxml.LoadFile("sol.xml");
+	if (!loadOkay)
 	{
 		cout << " A Ler o ficheiro " << nome.c_str() << endl;
 
@@ -333,7 +351,7 @@ void lXML(string nome) {
 		}
 		
 	}
-	else cout << "Nao foi encontrado o xml" << endl; // nao existe o ficheiro
+	else cout << "Nao foi encontrado o xml "<< loadOkay << endl; // nao existe o ficheiro
 }
 
 int main(int argc, char **argv) {
