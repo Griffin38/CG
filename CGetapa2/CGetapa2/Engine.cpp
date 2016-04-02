@@ -87,11 +87,18 @@ void renderScene(void) {
 
 		glPushMatrix();
 		if (!tr.trasnformacaoVazia()) {
+			tipo = tr.getEscala();
+			
+			if (!tipo.tipoVazio()) {
+				cout << "vai escalar " << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
+				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ());
+			}
+				
 			
 
 			tipo = tr.getRotacao();
 			if (!tipo.tipoVazio()) {
-
+				
 				glRotatef(tipo.getTAng(), tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
 			tipo = tr.getTranslacao();
@@ -99,10 +106,12 @@ void renderScene(void) {
 				
 				glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
-			tipo = tr.getEscala();
-			if (!tipo.tipoVazio()) {
 			
-				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
+			tipo = tr.getCor();
+			if (!tipo.tipoVazio()) {
+
+			
+			}
 
 
 		}
@@ -232,14 +241,14 @@ int leituraM(string nome , Model& m) {
 void Modelos(XMLElement* grupo, Transformation tdefault) {
 	Transformation temp;
 	Type tipoN;
-
+	int c;
 	//ver se tem filhos
 	if (strcmp(grupo->FirstChildElement()->Value(), "group") == 0) {
 		grupo = grupo->FirstChildElement();
 	}
 
 
-	//percorrer os filhos ( atributos) ate aos modelos 
+	//percorrer os  atributos ate aos modelos 
 
 	for (XMLElement* filho = grupo->FirstChildElement(); strcmp(filho->Value(), "models") != 0;filho = filho->NextSiblingElement() ) {
 		
@@ -263,10 +272,11 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			tipoN = Type::Type(tang + tt.getTAng(),tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
 			temp.setRotacao(tipoN);
 
-		}
+		}else temp.setRotacao(tdefault.getRotacao());
 
 		//scale 
 		if (strcmp(filho->Value(), "scale") == 0) {
+			cout << "ola" << endl;
 
 			float tx, ty, tz;
 
@@ -280,9 +290,10 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			else { tz = stof(filho->Attribute("Z")); }
 
 			Type tt = tdefault.getEscala();
-			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			tipoN = Type::Type(tx * tt.getTX(), ty * tt.getTY(), tz * tt.getTZ());
 			temp.setEscala(tipoN);
 		}
+		else { temp.setEscala(tdefault.getEscala()); }
 
 		//translate 
 		if (strcmp(filho->Value(), "translate") == 0) {
@@ -301,6 +312,24 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			Type tt = tdefault.getTranslacao();
 			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
 			temp.setTranslacao(tipoN);
+		}
+		//translate 
+		if (strcmp(filho->Value(), "color") == 0) {
+
+			float tx, ty, tz;
+
+			if (filho->Attribute("R") == NULL) { tx = 0; }
+			else { tx = stof(filho->Attribute("X")); }
+
+			if (filho->Attribute("G") == NULL) { ty = 0; }
+			else { ty = stof(filho->Attribute("Y")); }
+
+			if (filho->Attribute("B") == NULL) { tz = 0; }
+			else { tz = stof(filho->Attribute("Z")); }
+
+			Type tt = tdefault.getCor();
+			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			temp.setCor(tipoN);
 		}
 	}
 
