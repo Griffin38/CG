@@ -83,7 +83,7 @@ void renderScene(void) {
 		//cout << "Pontos " << n_ptos << endl;
 		Transformation tr = ListaM[i].getTransformacao();
 		Type tipo;
-		if(n_ptos > 0 ){
+		
 
 		glPushMatrix();
 		if (!tr.trasnformacaoVazia()) {
@@ -115,7 +115,7 @@ void renderScene(void) {
 		}
 		glEnd();
 		glPopMatrix();
-		}
+		
 		
 	}
 

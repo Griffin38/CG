@@ -1,28 +1,79 @@
-	<scene name="Sistema Solar">
-	<group name="Sun">
-	 <scale X="1" Y="1" Z="1" />
-	  <models>
-		<model file="sphere.3d" />
-	  </models>
-
-		<group name= "palneta1">
-		 <scale X="0.7" Y="0.7" Z="0.6" />
-		 <translate X="10" Y="0" Z="0" />
-		 <rotate angle="45" X="1" Y="1" Z="1"/>
-		  <models>
-	       <model file="sphere.3d" />
-	      </models>
-	    </group>
-
-	    <group  name= "palneta2">
+		<scene name="Sistema Solar">
+		<group name="Sun">
 		 <scale X="1" Y="1" Z="1" />
-		 <translate X="20" Y="0" Z="0" />
-		 <rotate angle="35" X="1" Y="1" Z="1"/>
 		  <models>
-	       <model file="sphere.3d" />
-	      </models>
+			<model file="sphere.3d" />
+		  </models>
+
+			<group name= "Mercurio">
+			 <scale X="0.0351036" Y="0.0351036" Z="0.0351036" />
+			 <translate X="2"  />
+			 <rotate angle="45" X="1" Y="1" Z="1"/>
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+		    </group>
+
+		    <group  name= "Venus">
+			 <scale X="0.08707626" Y="0.08707626" Z="0.08707626" />
+			 <translate X="1.8"  />
+			 <rotate angle="35" X="1" Y="1" Z="1"/>
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+
+	 <group  name= "Terra">
+			 <scale X="0.0917718" Y="0.0917718" Z="0.0917718" />
+			 <translate X="1.7"  />
+			
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+
+	<group name= "Marte"> 
+				<translate X="2" />
+				<scale X="0.04888058" Y="0.04888058" Z="0.04888058" />
+				<models>
+					<model file="sphere.3d" />
+				</models>
+			</group>
+
+	 <group  name= "Jupiter">
+			<scale X="0.102866187" Y="0.102866187" Z="0.102866187" />
+			 <translate X="1.7"  />
+			
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+			 <group  name= "Saturno">
+			<scale X="0.86716547" Y="0.86716547" Z="0.86716547" />
+			 <translate X="1.8"  />
+			
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+
+	 <group  name= "urano">
+			<scale X="0.36775540" Y=".36775540" Z=".36775540" />
+			 <translate X="1.8"  />
+			
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+
+	 <group  name= "Neptuno">
+			<scale X="0.35605756" Y="0.35605756" Z="0.35605756" />
+			 <translate X="4"  />
+			
+			  <models>
+		       <model file="sphere.3d" />
+		      </models>
+			</group>
+			
 		</group>
-
-
-	</group>
-	</scene>
+		</scene>
