@@ -363,12 +363,11 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(wsizex, wsizey);
 	glutCreateWindow("CG@DI-UM");
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	/*
+	
 	if (argc > 1) {
 
 			lXML(argv[1]);
-		}*/ lXML("test.xml");
-
+		}
 
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
