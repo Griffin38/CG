@@ -338,8 +338,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 
 		//scale 
 		if (strcmp(filho->Value(), "scale") == 0) {
-			cout << "ola" << endl;
-
+			
 			float tx, ty, tz;
 
 			if (filho->Attribute("X") == NULL) { tx = 1; }
@@ -354,9 +353,9 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			Type tt = tdefault.getEscala();
 			tipoN = Type::Type(tx * tt.getTX(), ty * tt.getTY(), tz * tt.getTZ());
 			temp.setEscala(tipoN);
-			cout << "variaveis anteriores " << tt.getTX() << " " << tt.getTY() << " " << tt.getTZ() << endl;
-			cout << "variaveis temporarias " << tx << " " << ty << " " << tz << endl;
-			cout << "escala " << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
+			//cout << "variaveis anteriores " << tt.getTX() << " " << tt.getTY() << " " << tt.getTZ() << endl;
+			//cout << "variaveis temporarias " << tx << " " << ty << " " << tz << endl;
+			//cout << "escala " << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
 		}
 		
 
@@ -406,7 +405,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			//escrever os modelos
 			m.setTransformacao(temp);
 			ListaM.push_back(m);
-			cout << "escala m" << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
+		//	cout << "escala m" << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
 			cout << "adicionado " << grupo->Attribute("name") << endl;
 			
 		}
