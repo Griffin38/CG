@@ -17,8 +17,12 @@ using namespace std;
 using namespace tinyxml2;
 
 float xx = 0, yy = 0, zz = 0, angle = 0.0f;
-float alpha = 0.0f, beta = 0.0f, radius = 5.0f;
-float camX, camY = 10.0f, camZ;
+float alpha = 0.0f, beta = 0.0f, radius = 40.0f;
+
+//RATO
+float rato = 0, ratoInx, ratoIny;
+//CAM
+float camX = 0, camY = 0, camZ = 0, posX = 0, posY = 0, posZ = 0;
 int menu, wsizex = 800, wsizey = 400;
 
 vector<Model> ListaM;
@@ -52,9 +56,9 @@ void changeSize(int w, int h) {
 //CAMERA
 void sphericalToCartesian() {
 
-	camX = radius * cos(beta) * sin(alpha);
+	camX = posX + radius * cos(beta) * sin(alpha);
 	camY = radius * sin(beta);
-	camZ = radius * cos(beta) * cos(alpha);
+	camZ = posZ + radius * cos(beta) * cos(alpha);
 }
 //render scnene 
 
@@ -68,7 +72,7 @@ void renderScene(void) {
 
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
 	gluLookAt(camX, camY, camZ,
-		0.0, 0.0, 0.0,
+		posX, posY, posZ,
 		0.0f, 1.0f, 0.0f);
 
 	glTranslatef(xx, yy, zz);
@@ -144,24 +148,41 @@ void renderScene(void) {
 
 void keys(int key, int xx, int yy)
 {
+	int mod = glutGetModifiers();
 	switch (key) {
 
 	case GLUT_KEY_RIGHT:
-		alpha -= 0.1; break;
+		if (mod == GLUT_ACTIVE_SHIFT)
+			posX++;
+		else
+			alpha += 0.1;
+		break;
 
 	case GLUT_KEY_LEFT:
-		alpha += 0.1; break;
+		if (mod == GLUT_ACTIVE_SHIFT)
+			posX--;
+		else
+			alpha -= 0.1;
+		break;
 
 	case GLUT_KEY_UP:
-		beta += 0.1f;
-		if (beta > 1.5f)
-			beta = 1.5f;
+		if (mod == GLUT_ACTIVE_SHIFT)
+			posZ--;
+		else {
+			beta += 0.1f;
+			if (beta > 1.5f)
+				beta = 1.5f;
+		}
 		break;
 
 	case GLUT_KEY_DOWN:
-		beta -= 0.1f;
-		if (beta < -1.5f)
-			beta = -1.5f;
+		if (mod == GLUT_ACTIVE_SHIFT)
+			posZ++;
+		else {
+			beta -= 0.1f;
+			if (beta < -1.5f)
+				beta = -1.5f;
+		}
 		break;
 
 	case GLUT_KEY_PAGE_UP: radius -= 1.5f;
@@ -176,6 +197,45 @@ void keys(int key, int xx, int yy)
 	glutPostRedisplay();
 }
 
+void BotRato(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON) {
+		if (state == GLUT_DOWN) {
+			rato = 1;
+			ratoInx = x;
+			ratoIny = y;
+		}
+		else if (state == GLUT_UP)
+			rato = 0;
+	}
+}
+
+void MovRato(int x, int y) {
+	int flag = 0;
+	int merro = 30;
+	if (rato == 1) {
+		if (x < (ratoInx - merro)) {
+			//cout << "x " << x << " | Ratox " << ratoInx << endl;
+			//cout << "y " << y << " | Ratoy " << ratoIny << endl;
+			alpha += 0.05;
+		}
+		else if (x >(ratoInx + merro)) {
+			alpha -= 0.05;
+		}
+		if (y > (ratoIny + (merro * 3))) {
+			beta += 0.01f;
+			if (beta > 1.5f)
+				beta = 1.5f;
+		}
+		else if (y < (ratoIny - (merro * 3))) {
+			beta -= 0.01f;
+			if (beta < -1.5f)
+				beta = -1.5f;
+		}
+
+	}
+	sphericalToCartesian();
+	glutPostRedisplay();
+}
 
 // write function to process menu events
 
@@ -406,13 +466,14 @@ int main(int argc, char **argv) {
 		}
 
 	// Required callback registry 
+	sphericalToCartesian();
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 	// put here the registration of the keyboard and menu callbacks
 	glutSpecialFunc(keys);
-	//glutMouseFunc(BotRato);
-	//glutMotionFunc(MovRato);
+	glutMouseFunc(BotRato);
+	glutMotionFunc(MovRato);
 
 	// put here the definition of the menu 
 
