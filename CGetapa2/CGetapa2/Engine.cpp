@@ -106,8 +106,9 @@ void renderScene(void) {
 			
 			tipo = tr.getEscala();
 			if (!tipo.tipoVazio()) {
-				cout << "vai escalar " << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
+				
 				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ());
+			//	cout << "escala render" << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
 			}
 
 			tipo = tr.getCor();
@@ -293,8 +294,11 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			Type tt = tdefault.getEscala();
 			tipoN = Type::Type(tx * tt.getTX(), ty * tt.getTY(), tz * tt.getTZ());
 			temp.setEscala(tipoN);
+			cout << "variaveis anteriores " << tt.getTX() << " " << tt.getTY() << " " << tt.getTZ() << endl;
+			cout << "variaveis temporarias " << tx << " " << ty << " " << tz << endl;
+			cout << "escala " << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
 		}
-		else { temp.setEscala(tdefault.getEscala()); }
+		
 
 		//translate 
 		if (strcmp(filho->Value(), "translate") == 0) {
@@ -342,6 +346,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			//escrever os modelos
 			m.setTransformacao(temp);
 			ListaM.push_back(m);
+			cout << "escala m" << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
 			cout << "adicionado " << grupo->Attribute("name") << endl;
 			
 		}
