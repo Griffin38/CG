@@ -175,7 +175,7 @@
 			</group>
 
 			<group  name= "Neptuno">
-				<scale X="0.035" Y="0.035" Z="0.035" />
+				<scale X="0.0035" Y="0.03" Z="0.03" />
 				<translate X="234.5"  />
 				<color R="0" G="3.4" B="8.3"/>
 				<models>
