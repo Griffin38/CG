@@ -97,7 +97,7 @@
 						</models>
 					</group>
 
-					
+
 
 				</group>
 
@@ -130,7 +130,7 @@
 						</models>
 					</group>
 
-					
+
 					<group name="sLua3-Kapetus">
 						<scale X="0.012" Y="0.012" Z="0.012" />
 						<translate X="1" Y="-1.5" Z="0"  />
@@ -140,18 +140,18 @@
 						</models>
 					</group>
 
-					
+
 					<group name="sLua4-Dione">
 						<scale X="0.009" Y="0.009" Z="0.009" />
 						<translate X="-2" Y="-1" Z="2"  />
-						
+
 						<models>
 							<model file="sphere.3d" />
 						</models>
 					</group>
 
-					
-					
+
+
 				</group>
 
 			</group>
@@ -174,5 +174,12 @@
 				</models>
 			</group>
 
-
+<group  name= "Neptuno">
+				<scale X="0.035" Y="0.035" Z="0.035" />
+				<translate X="234.5"  />
+				<color R="0" G="3.4" B="8.3"/>
+				<models>
+					<model file="sphere.3d" />
+				</models>
+			</group>
 		</scene>
