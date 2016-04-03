@@ -159,7 +159,7 @@
 	<group  name= "urano">
 		<scale X="0.36" Y="0.36" Z="0.36" />
 		<translate X="143.3"  />
- <color R="3.6" G="3.4" B="0.3"/>
+		 <color R="3.6" G="3.4" B="0.3"/>
 		<models>
 			<model file="sphere.3d" />
 		</models>
@@ -168,7 +168,7 @@
 	<group  name= "Neptuno">
 		<scale X="0.35" Y="0.35" Z="0.35" />
 		<translate X="215.5"  />
- <color R="0.6" G="3.4" B="3.3"/>
+		<color R="0.6" G="3.4" B="3.3"/>
 		<models>
 			<model file="sphere.3d" />
 		</models>
