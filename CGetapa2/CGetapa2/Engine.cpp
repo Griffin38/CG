@@ -87,12 +87,9 @@ void renderScene(void) {
 
 		glPushMatrix();
 		if (!tr.trasnformacaoVazia()) {
-			tipo = tr.getEscala();
+		
 			
-			if (!tipo.tipoVazio()) {
-				cout << "vai escalar " << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
-				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ());
-			}
+		
 				
 			
 
@@ -107,15 +104,19 @@ void renderScene(void) {
 				glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
 
 			
-			tipo = tr.getCor();
+			tipo = tr.getEscala();
 			if (!tipo.tipoVazio()) {
-
-			
+				cout << "vai escalar " << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
+				glScalef(tipo.getTX(), tipo.getTY(), tipo.getTZ());
 			}
 
+			tipo = tr.getCor();
+			if (!tipo.tipoVazio()) {
+				glColor3f(tipo.getTX(), tipo.getTY(), tipo.getTZ());
 
+			}
 		}
-		
+			
 		glBegin(GL_TRIANGLES);
 		for (int j = 0; j < n_ptos; j++) {
 			//cout << "x " << lptos[j].getX() << " y " << lptos[j].getY() << " z" << lptos[j].getZ() << endl;
@@ -257,7 +258,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			float tx, ty, tz,tang;
 
 			if (filho->Attribute("angle") == NULL) { tang = 0; }
-			else { tang = stof(filho->Attribute("Z")); }
+			else { tang = stof(filho->Attribute("angle")); }
 
 			if (filho->Attribute("X") == NULL) { tx = 0; }
 			else { tx = stof(filho->Attribute("X")); }
@@ -280,13 +281,13 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 
 			float tx, ty, tz;
 
-			if (filho->Attribute("X") == NULL) { tx = 0; }
+			if (filho->Attribute("X") == NULL) { tx = 1; }
 			else { tx = stof(filho->Attribute("X")); }
 
-			if (filho->Attribute("Y") == NULL) { ty = 0; }
+			if (filho->Attribute("Y") == NULL) { ty = 1; }
 			else { ty = stof(filho->Attribute("Y")); }
 
-			if (filho->Attribute("Z") == NULL) { tz = 0; }
+			if (filho->Attribute("Z") == NULL) { tz = 1; }
 			else { tz = stof(filho->Attribute("Z")); }
 
 			Type tt = tdefault.getEscala();
@@ -313,23 +314,24 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
 			temp.setTranslacao(tipoN);
 		}
-		//translate 
+	//Cor 
 		if (strcmp(filho->Value(), "color") == 0) {
-
+			
 			float tx, ty, tz;
 
 			if (filho->Attribute("R") == NULL) { tx = 0; }
-			else { tx = stof(filho->Attribute("X")); }
+			else { tx = stof(filho->Attribute("R")); }
 
 			if (filho->Attribute("G") == NULL) { ty = 0; }
-			else { ty = stof(filho->Attribute("Y")); }
+			else { ty = stof(filho->Attribute("G")); }
 
 			if (filho->Attribute("B") == NULL) { tz = 0; }
-			else { tz = stof(filho->Attribute("Z")); }
-
+			else { tz = stof(filho->Attribute("B")); }
+			
 			Type tt = tdefault.getCor();
-			tipoN = Type::Type(tx + tt.getTX(), ty + tt.getTY(), tz + tt.getTZ());
+			tipoN = Type::Type(tx ,ty , tz );
 			temp.setCor(tipoN);
+			
 		}
 	}
 
