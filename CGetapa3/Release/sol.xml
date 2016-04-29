@@ -1,0 +1,68 @@
+	<scene name="Sistema Solar">
+	<group name="Sun">
+	 <scale X="1" Y="1" Z="1" />
+    <color R="1" G="0" B="0"/>
+	  <models>
+		<model file="sphere.3d" />
+	  </models>
+
+		<group name= "Mercurio">
+		<scale X="0.035" Y="0.035" Z="0.035" />
+		<translate T="2"   >
+				<Point X="6" Y="0" Z="0"/>
+				
+				<Point X="0" Y="0" Z="-8"/>
+			
+				<Point X="-6" Y="0" Z="0"/>
+			
+				<Point X="0" Y="0" Z="8"/>
+			
+</translate>
+					<rotate T="20" X="1" Y="1" Z="1"/>
+        <color R="1" G="0" B="0.3"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+		</group>
+
+
+
+				<group  name= "Terra">
+					<scale X="0.1" Y="0.1" Z="0.1" />
+						<translate T="4"   >
+				<Point X="12" Y="0" Z="0"/>
+				
+				<Point X="0" Y="0" Z="-12"/>
+			
+				<Point X="-12" Y="0" Z="0"/>
+			
+				<Point X="0" Y="0" Z="12"/>
+			
+</translate>
+
+					<models>
+						<model file="sphere.3d" />
+					</models>
+
+					<group name="Lua">
+						<scale X="0.25" Y="0.25" Z="0.25" />
+							<translate T="1"   >
+				<Point X="6" Y="0" Z="0"/>
+				
+				<Point X="0" Y="0" Z="-8"/>
+			
+				<Point X="-6" Y="0" Z="0"/>
+			
+				<Point X="0" Y="0" Z="8"/>
+			
+</translate>
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+				</group>
+
+
+		</group>		
+	</scene>

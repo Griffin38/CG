@@ -1,0 +1,27 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (CGetapa2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Engine.cpp
+Engine.cpp(39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(75): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(123): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(137): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(198): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(205): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(244): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(245): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(259): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(262): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(311): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(317): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(323): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(300): warning C4101: 'aux': unreferenced local variable
+Engine.cpp(434): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(435): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(436): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(349): warning C4101: 'c': unreferenced local variable
+Engine.cpp(510): warning C4101: 'elem': unreferenced local variable
+  Generating code
+  2 of 717 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    9 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  CGetapa2.vcxproj -> C:\Users\Pedro\Documents\Visual Studio 2015\Projects\CGetapa3\Release\CGetapa3.exe
