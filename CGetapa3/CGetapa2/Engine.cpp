@@ -95,42 +95,30 @@ void renderScene(void) {
 	glTranslatef(xx, yy, zz);
 
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
-	int n_models = ListaM.size(), n_ptos;
-	float res[3];
-	vector <Point> lptos;
+	int n_models = ListaM.size();
+	
+	
 	
 	for (int i = 0; i < n_models; i++) {
-		lptos = ListaM[i].getPontos();
-		n_ptos = ListaM[i].getPontos().size();
-		//cout << "Pontos " << n_ptos << endl;
+		
+		
 		Model mod = ListaM[i];
+		float res[3];
+		
 		Transformation tr = ListaM[i].getTransformacao();
-		Type tipo;
-		Rotate r;
-		Scalate s;
-		Translate t;
-		
 		glPushMatrix();
-		if (!tr.trasnformacaoVazia()) {
-		
-			
-		
-				
-			
+		if (!tr.trasnformacaoVazia()) {	
 
-			r = tr.getRotacao();
+			Rotate r = tr.getRotacao();
 			if (!r.isEmpty() && r.getTime()!=0) {
 				float t = glutGet(GLUT_ELAPSED_TIME) % (int)(r.getTime() * 1000);
 				float gr = (t * 360) / (r.getTime() * 1000);
-			//	cout << "rotate" << gr << " " << r.getX() << " " << r.getY() << " "<< r.getZ()<< endl;
+			
 				glRotatef(gr, r.getX(), r.getY(), r.getZ());
-				//glRotatef(tipo.getTAng(), tipo.getTX(), tipo.getTY(), tipo.getTZ());
 			}
 
-			t = tr.getTranslacao();
-			if (!t.isEmpty() && t.getTime() != 0) {
-				
-
+			Translate t = tr.getTranslacao();
+			if (!t.isEmpty() ) {
 				
 					int n = t.getSize();
 					if (n > 0) {
@@ -142,26 +130,21 @@ void renderScene(void) {
 
 						renderCatmullRomCurve(t.getCurvas());
 						t.getGlobalCatmullRomPoint(gt, res, tp);
-					//	cout << "posiçao inicial" << res[0] << " " << res[1] << " " << res[2] << endl;
+				
  						glTranslatef(res[0], res[1], res[2]);
 					}
 				}
 
 
-
-
-			//	glTranslatef(tipo.getTX(), tipo.getTY(), tipo.getTZ()); }
-
 			
-			s = tr.getEscala();
+			Scalate s = tr.getEscala();
 			if (!s.isEmpty()) {
 				
 				glScalef(s.getX(), s.getY(), s.getZ());
-			//	cout << "scale" << " " << s.getX() << " " << s.getY() << " " << s.getZ() << endl;
-			//	cout << "escala render" << tipo.getTX() << " " << tipo.getTY() << " " << tipo.getTZ() << endl;
+			
 			}
 
-			tipo = tr.getCor();
+			Type tipo = tr.getCor();
 			if (!tipo.isEmpty()) {
 				glColor3f(tipo.getTX(), tipo.getTY(), tipo.getTZ());
 
@@ -354,14 +337,14 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 
 
 	//percorrer os  atributos ate aos modelos 
-
+	temp = Transformation::Transformation();
 	for (XMLElement* filho = grupo->FirstChildElement(); strcmp(filho->Value(), "models") != 0;filho = filho->NextSiblingElement() ) {
 		
 		//rotate+e*************************************************************************************************************************
 		if (strcmp(filho->Value(), "rotate") == 0) {
-			float tx, ty, tz,tt2;
+			float tx, ty, tz, tt2;
 
-			
+
 
 			if (filho->Attribute("X") == NULL) { tx = 0; }
 			else { tx = stof(filho->Attribute("X")); }
@@ -374,12 +357,12 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 
 			if (filho->Attribute("T") == NULL) { tt2 = 0; }
 			else { tz = stof(filho->Attribute("T")); }
-			
+
 			Rotate tt = tdefault.getRotacao();
-			rN = Rotate::Rotate(tt2,tx + tt.getX(), ty + tt.getY(), tz + tt.getZ());
+			rN = Rotate::Rotate(tt2, tx + tt.getX(), ty + tt.getY(), tz + tt.getZ());
 			temp.setRotacao(rN);
 
-		}else temp.setRotacao(tdefault.getRotacao());
+		}
 
 		//scale *********************************************************************************************************************************
 		if (strcmp(filho->Value(), "scale") == 0) {
@@ -400,6 +383,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			temp.setEscala(sN);
 			
 		}
+		
 		
 
 		//translate  ***************************************************************************************************************
@@ -430,13 +414,15 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 					tz = stof(ponto->Attribute("Z"));
 				}
 				Translate tt = tdefault.getTranslacao();
-				if (tt.getTime() != 0) {
+				if (!tt.isEmpty()) {
 					tx = tx + tt.getPontos().at(i).getX();
 					ty = ty + tt.getPontos().at(i).getY();
 					tz = tz + tt.getPontos().at(i).getZ();
+				
 					i++;
+				
 				}
-
+				
 				Point p = Point::Point(tx, ty, tz);
 				pontosAux.push_back(p);
 			}
@@ -467,6 +453,7 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 			temp.setCor(tipoN);
 			
 		}
+		else temp.setCor(tdefault.getCor());
 	}
 
 	//percorrer os modelos do filho 

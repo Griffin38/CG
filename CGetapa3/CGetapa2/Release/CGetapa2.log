@@ -2,26 +2,26 @@
   Engine.cpp
 Engine.cpp(39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 Engine.cpp(75): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(123): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(137): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(198): warning C4305: '+=': truncation from 'double' to 'float'
-Engine.cpp(205): warning C4305: '-=': truncation from 'double' to 'float'
-Engine.cpp(244): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(245): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(259): warning C4305: '+=': truncation from 'double' to 'float'
-Engine.cpp(262): warning C4305: '-=': truncation from 'double' to 'float'
-Engine.cpp(311): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(317): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(323): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(300): warning C4101: 'aux': unreferenced local variable
-Engine.cpp(434): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(435): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(436): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(349): warning C4101: 'c': unreferenced local variable
-Engine.cpp(510): warning C4101: 'elem': unreferenced local variable
+Engine.cpp(114): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(125): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(181): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(188): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(227): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(228): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(242): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(245): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(294): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(300): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(306): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(283): warning C4101: 'aux': unreferenced local variable
+Engine.cpp(418): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(419): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(420): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(332): warning C4101: 'c': unreferenced local variable
+Engine.cpp(497): warning C4101: 'elem': unreferenced local variable
   Generating code
-  2 of 717 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  2 of 705 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    9 functions had inline decision re-evaluated but remain unchanged
+    29 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   CGetapa2.vcxproj -> C:\Users\Pedro\Documents\Visual Studio 2015\Projects\CGetapa3\Release\CGetapa3.exe
