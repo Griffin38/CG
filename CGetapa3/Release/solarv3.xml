@@ -107,7 +107,7 @@
 
 
 				<group  name= "Jupiter">
-					<scale X="0.9" Y="0.9" Z="0.9" />
+			<scale X="0.9" Y="0.9" Z="0.9" />
 			<translate T="70"  > 
 			<Point X="35.9" Y="0" Z="0"/>
 			<Point X="25.38" Y="0" Z="-25.38"/>
@@ -128,14 +128,14 @@
 						<scale X="0.038" Y="0.038" Z="0.038" />
 							<translate T="12"   >
 	
-<Point  X="0" Y="2" Z="0"/>
-<Point X="0" Y="2.5" Z="0"/>
-<Point X="0" Y="2" Z="0"/>
-<Point X="0" Y="-2.5" Z="0"/>
-<Point X="0" Y="-2" Z="0"/>
-<Point X="0" Y="-2.4" Z="0"/>
-<Point X="0" Y="-2" Z="0"/>
-<Point X="0" Y="2" Z="0"/>
+<Point  X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
 </translate>
 
 						<models>
@@ -306,7 +306,7 @@
 	
 		</group>
 
-	</group>
+	
 
 	<group  name= "urano">
 		<scale X="0.36" Y="0.36" Z="0.36" />
@@ -345,18 +345,22 @@
 	</group>
 
 <group name= "Cometa">
-	<translate T="110"   >  
-			<Point X="234.5" Y="0" Z="0"/>  
-			<Point X="165.81" Y="0" Z="-165.81"/>
-			<Point X="0" Y="0" Z="-234.5"/>
-			<Point X="-165.81" Y="0" Z="-165.81"/>
-			<Point X="-234.5" Y="0" Z="0"/>
-			<Point X="-165.81" Y="0" Z="165.81"/>
-			<Point X="0" Y="0" Z="234.5"/>
-			<Point X="165.81" Y="0" Z="165.81"/>
+	<scale X="0.8" Y="0.8" Z="0.8" /> 
+		<color R="1" G="0" B="1"/>
+	<translate T="10"  > 
+			<Point X="31.9" Y="0" Z="0"/>
+			<Point X="22.55" Y="0" Z="-22.55"/>
+			<Point X="0" Y="0" Z="-31.9"/>
+			<Point X="-22.55" Y="0" Z="-22.55"/>
+			<Point X="-31.9" Y="0" Z="0"/>
+			<Point X="-22.55" Y="0" Z="22.55"/>
+			<Point X="0" Y="0" Z="31.9"/>
+			<Point X="22.55" Y="0" Z="22.55"/>
 		</translate>
 		<models>
 			<model file="teapot.3d" />
 		</models>
+
+</group>
 </group>
 	</scene>
