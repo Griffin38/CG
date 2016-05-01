@@ -6,43 +6,7 @@
 					<model file="sphere.3d" />
 				</models>
 
-				<group name= "Mercurio">
-					<scale X="0.035" Y="0.035" Z="0.035" />
-					<translate T="30"   >
-			<Point X="6" Y="0" Z="0"/>
-			<Point X="4.2" Y="0" Z="-4.2"/>
-			<Point X="0" Y="0" Z="-6"/>
-			<Point X="-4.2" Y="0" Z="-4.2"/>
-			<Point X="-6" Y="0" Z="0"/>
-			<Point X="-4.2" Y="0" Z="4.2"/>
-			<Point X="0" Y="0" Z="6"/>
-			<Point X="4.2" Y="0" Z="4.2"/>
-		</translate>
-					<rotate angle="45" X="1" Y="1" Z="1"/>
-        <color R="1" G="0" B="0.3"/>
-					<models>
-						<model file="sphere.3d" />
-					</models>
-				</group>
-<group name= "Venus">
-					<scale X="0.086" Y="0.086" Z="0.086" />
-					<translate T="47"   >
-				<Point X="9" Y="0" Z="0"/>
-			<Point X="6.36" Y="0" Z="-6.36"/>
-			<Point X="0" Y="0" Z="-9"/>
-			<Point X="-6.36" Y="0" Z="-6.36"/>
-			<Point X="-9" Y="0" Z="0"/>
-			<Point X="-6.36" Y="0" Z="6.36"/>
-			<Point X="0" Y="0" Z="9"/>
-			<Point X="6.36" Y="0" Z="6.36"/>
-		</translate>
-					<rotate angle="45" X="1" Y="1" Z="1"/>
-        <color R="0.6" G="0.4" B="0.3"/>
-					<models>
-						<model file="sphere.3d" />
-					</models>
-				</group>
-				<group  name= "Terra">
+					<group  name= "Terra">
 					<scale X="0.09" Y="0.09" Z="0.09" />
 					<translate T="55"   >
 
@@ -62,14 +26,19 @@
 					</models>
 
 					<group name="Lua">
-						<scale X="0.272" Y="0.272" Z="0.272" />
+						<scale X="0.3" Y="0.3" Z="0.3" />
 						<translate T="12"   >
-			<Point X="-0.7" Y="-0.3" Z="0.7"/>
-		    <Point X="0.7" Y="-0.5" Z="0.7"/>
-			<Point X="0.7" Y="0.5" Z="0.7"/>
-			<Point X="0.7" Y="0.3" Z="-0.7"/>
+	
+			<Point  X="0" Y="3" Z="0"/>
+<Point X="0" Y="3.5" Z="0"/>
+<Point X="0" Y="3" Z="0"/>
+<Point X="0" Y="-3.5" Z="0"/>
+<Point X="0" Y="-3" Z="0"/>
+	<Point X="0" Y="-3.4" Z="0"/>
+	<Point X="0" Y="-1" Z="0"/>
+	<Point X="0" Y="2" Z="0"/>
 			
-		</translate>>
+		</translate>
 
   						<color R="1" G="2" B="24"/>
 						<models>
@@ -77,30 +46,6 @@
 						</models>
 					</group>
 				</group>
-
-
-
-			
-				<group name= "Marte">
-					<scale X="0.048" Y="0.048" Z="0.048" />
-					 <color R="9.6" G="0.4" B="0.3"/>
-					<translate T="60"   >
-			<Point X="14.3" Y="0" Z="0"/>
-			<Point X="10.11" Y="0" Z="-10.11"/>
-			<Point X="0" Y="0" Z="-14.3"/>
-			<Point X="-10.11" Y="0" Z="-10.11"/>
-			<Point X="-14.3" Y="0" Z="0"/>
-			<Point X="-10.11" Y="0" Z="10.11"/>
-			<Point X="0" Y="0" Z="14.3"/>
-			<Point X="10.11" Y="0" Z="10.11"/>
-		</translate>
-					<rotate angle="45" X="1" Y="1" Z="1"/>
-        
-					<models>
-						<model file="sphere.3d" />
-					</models>
-				</group>
-
 
 
 

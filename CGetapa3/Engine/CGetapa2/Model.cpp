@@ -41,6 +41,9 @@ void Model::prep() {
 
 	free(vertexB);
 }
-Model::~Model(void)
-{
+void Model::addFilho(Model m) {
+	descendentes.push_back(m);
+}
+Model::~Model(void) {
+
 }

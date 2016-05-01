@@ -63,13 +63,18 @@
 
 					<group name="Lua">
 						<scale X="0.272" Y="0.272" Z="0.272" />
-						<translate T="12"   >
-			<Point X="-0.7" Y="-0.3" Z="0.7"/>
-		    <Point X="0.7" Y="-0.5" Z="0.7"/>
-			<Point X="0.7" Y="0.5" Z="0.7"/>
-			<Point X="0.7" Y="0.3" Z="-0.7"/>
+					<translate T="12"   >
+	
+			<Point  X="0" Y="3" Z="0"/>
+<Point X="0" Y="3.5" Z="0"/>
+<Point X="0" Y="3" Z="0"/>
+<Point X="0" Y="-3.5" Z="0"/>
+<Point X="0" Y="-3" Z="0"/>
+	<Point X="0" Y="-3.4" Z="0"/>
+	<Point X="0" Y="-1" Z="0"/>
+	<Point X="0" Y="2" Z="0"/>
 			
-		</translate>>
+		</translate>
 
   						<color R="1" G="2" B="24"/>
 						<models>
@@ -121,12 +126,17 @@
 
 					<group name="jLua1-Ganymede">
 						<scale X="0.038" Y="0.038" Z="0.038" />
-						<translate T="99"   >
-			<Point X="2" Y="5" Z="2"/>
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+							<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
 
 						<models>
 							<model file="sphere.3d" />
@@ -135,12 +145,17 @@
 
 					<group name="jLua2-Callisto">
 						<scale X="0.035" Y="0.035" Z="0.035" />
-						<translate T="30"   >
-			<Point X="0.035" Y="0.035" Z="0.035"/>
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+							<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
 
 						<models>
 							<model file="sphere.3d" />
@@ -149,12 +164,17 @@
 
 					<group name="jLua3-Io">
 						<scale X="0.026" Y="0.026" Z="0.026" />
-						<translate T="30"   >
-			<Point X="2" Y="-3" Z="0"/>
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+								<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
 
 						<models>
 							<model file="sphere.3d" />
@@ -163,12 +183,17 @@
 
 					<group name="jLua4-Europa">
 						<scale X="0.022" Y="0.022" Z="0.022" />
-						<translate T="30"   >
-			<Point X="-4" Y="-4" Z="2" />
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+						<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
 
 						<models>
 							<model file="sphere.3d" />
@@ -199,12 +224,17 @@
 
 						<group name="sLua1-titan">
 							<scale X="0.042" Y="0.042" Z="0.042" />
-							<translate T="30"   >
-			<Point X="1" Y="2.5" Z="1" />
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+			<translate T="123"   >
+	
+<Point  X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+</translate>
 
 							<models>
 								<model file="sphere.3d" />
@@ -215,12 +245,17 @@
 
 					<group name="sLua2-Rhea">
 						<scale X="0.012" Y="0.012" Z="0.012" />
-						<translate T="30"   >
-			<Point X="-2" Y="2" Z="2"/>
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+			<translate T="123"   >
+	
+<Point  X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+</translate>
 
 						<models>
 							<model file="sphere.3d" />
@@ -230,12 +265,17 @@
 			
 				<group name="sLua3-Kapetus">
 					<scale X="0.012" Y="0.012" Z="0.012" />
-					<translate T="30"   >
-			<Point X="0.012" Y="0.012" Z="0.012"/>
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+			<translate T="123"   >
+	
+<Point  X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+</translate>
 
 					<models>
 						<model file="sphere.3d" />
@@ -245,12 +285,17 @@
 			
 			<group name="sLua4-Dione">
 				<scale X="0.009" Y="0.009" Z="0.009" />
-				<translate T="30"   >
-			<Point X="-2" Y="-1" Z="2" />
-			<Point X="0" Y="0" Z="-14.16"/>
-			<Point X="-14.16" Y="0" Z="0"/>
-			<Point X="0" Y="0" Z="14.16"/>
-		</translate>
+				<translate T="123"   >
+	
+<Point  X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+<Point X="0" Y="1" Z="0"/>
+</translate>
 				
 				<models>
 					<model file="sphere.3d" />

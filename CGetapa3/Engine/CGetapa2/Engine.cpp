@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include "tinyxml2.h"
 #include"Type.h"
 #include"Transformation.h"
@@ -12,7 +13,7 @@
 #include"Model.h"
 
 
-#include <string>
+
 
 using namespace std;
 using namespace tinyxml2;
@@ -117,6 +118,7 @@ void renderScene(void) {
 				glRotatef(gr, r.getX(), r.getY(), r.getZ());
 			}
 
+
 			Translate t = tr.getTranslacao();
 			if (!t.isEmpty() ) {
 				
@@ -126,6 +128,7 @@ void renderScene(void) {
 						float gt = r / (t.getTime() * 1000);
 						vector<Point> tp = t.getPontos();
 						//marca das órbitas
+						
 
 
 						renderCatmullRomCurve(t.getCurvas());
@@ -151,6 +154,54 @@ void renderScene(void) {
 			}
 		}
 			
+		/*****/
+
+
+		if (ListaM[i].getFilhos().size() != 0){
+		vector<Model> filhos = ListaM[i].getFilhos();
+		for (int k = 0; k < filhos.size(); k++){
+		Transformation tfilho = filhos[k].getTransformacao();
+		if (!tfilho.trasnformacaoVazia()){
+		glPushMatrix();
+		Translate trans = tfilho.getTranslacao();
+		if (!trans.isEmpty()){
+		int tam = trans.getSize();
+		if (tam > 0){
+		float te = glutGet(GLUT_ELAPSED_TIME) % (int)(trans.getTime() * 1000);
+		float gt = te / (trans.getTime() * 1000);
+		vector<Point> vpt = trans.getPontos();
+		renderCatmullRomCurve(trans.getCurvas());
+		trans.getGlobalCatmullRomPoint(gt, res, vpt);
+		glTranslatef(res[0], res[1], res[2]);
+
+		}
+		}
+
+		Rotate rot = tfilho.getRotacao();
+		if (!rot.isEmpty()){
+		float r = glutGet(GLUT_ELAPSED_TIME) % (int)(rot.getTime() * 1000);
+		float gr = (r * 360) / (rot.getTime() * 1000);
+		glRotatef(gr, rot.getX(), rot.getY(), rot.getZ());
+		}
+
+		Scalate esc = tfilho.getEscala();
+		if (!esc.isEmpty()){
+		glScalef(esc.getX(), esc.getY(), esc.getZ());
+		}
+		}
+
+	
+		
+		
+		filhos[k].draw();
+		
+	
+		/**********/
+
+		glPopMatrix();
+		}
+		}
+		
 		mod.draw();
 		glPopMatrix();
 		
@@ -323,7 +374,7 @@ int leituraM(string nome , Model& m) {
 	
 }
 
-void Modelos(XMLElement* grupo, Transformation tdefault) {
+void Modelos(XMLElement* grupo, Transformation tdefault,int rel) {
 	Transformation temp;
 	Type tipoN;
 	Rotate rN;
@@ -456,30 +507,42 @@ void Modelos(XMLElement* grupo, Transformation tdefault) {
 		else temp.setCor(tdefault.getCor());
 	}
 
+	
+
+
 	//percorrer os modelos do filho 
+	Model m(grupo->Attribute("name"));
 	for (XMLElement* modelo = grupo->FirstChildElement("models")->FirstChildElement("model"); modelo; modelo = modelo->NextSiblingElement("model")) {
-		Model m (grupo->Attribute("name"));
+		
 		if (leituraM(modelo->Attribute("file"), m)) {
 			//escrever os modelos
 			m.setTransformacao(temp);
-			ListaM.push_back(m);
-		//	cout << "escala m" << temp.getEscala().getTX() << " " << temp.getEscala().getTY() << " " << temp.getEscala().getTZ() << endl;
-			cout << "adicionado " << grupo->Attribute("name") << endl;
+			
+	
 			
 		}
 	}
 	//ver se tem mais filhos
 
+	int desc = ListaM.size();
+
+	if (desc > 1 && rel == 1) {
+		ListaM[desc - 1].addFilho(m);
+	}
+	else {
+		ListaM.push_back(m);
+	}
+
 	if (grupo->FirstChildElement("group")) {
 		XMLElement *son = grupo->FirstChildElement("group");
 		cout << "processar filho " << son->Attribute("name") << endl;
-		Modelos(son, temp);
+		Modelos(son, temp,1);
 	}
 	//ver se tem irmaos
 	if (grupo->NextSiblingElement("group")) {
 		XMLElement *brotha = grupo->NextSiblingElement("group");
 		cout << "processar irmao " << brotha->Attribute("name") << endl;
-		Modelos(brotha, tdefault);
+		Modelos(brotha, tdefault,0);
 	}
 
 }
@@ -499,7 +562,7 @@ void lXML(string nome) {
 		
 		if (root != NULL) {
 			cout << "A começar a desenhar ->  " << root->Attribute("name") << endl;
-			Modelos(root->FirstChildElement("group"), t);  // manda o primeiro grupo para procurar os modelos 
+			Modelos(root->FirstChildElement("group"), t,0);  // manda o primeiro grupo para procurar os modelos 
 
 		}
 		
@@ -514,6 +577,20 @@ void goVBO() {
 		ListaM[i].prep();
 
 
+
+	for (int i = 0; i < n; i++) {
+
+		if (ListaM[i].getFilhos().size() != 0) {
+			vector<Model> filhos = ListaM[i].getFilhos();
+			for (int j = 0; j < filhos.size(); j++) {
+				filhos[j].prep();
+			}
+			ListaM[i].setFilhos(filhos);
+		}
+
+		ListaM[i].prep();
+
+	}
 }
 int main(int argc, char **argv) {
 
