@@ -319,23 +319,7 @@ void patch(string fich, int tess, string nome) {
 
 
 
-	/*
-	double x, y, z;
-	y = 0;
 
-	if (!(lado % 2))
-		x = z = lado / 2;
-	else x = z = lado / 2 + 0.5;
-
-	//1 triangulo
-	printf("%f %f %f\n", x, y, z); file << x << "," << y << "," << z << endl;
-	printf("%f %f %f\n", x, y, -z); file << x << "," << y << "," << -z << endl;
-	printf("%f %f %f\n", -x, y, -z); file << -x << "," << y << "," << -z << endl;
-	//2 triangulo
-	printf("%f %f %f\n", -x, y, z); file << -x << "," << y << "," << z << endl;
-	printf("%f %f %f\n", x, y, z); file << x << "," << y << "," << z << endl;
-	printf("%f %f %f\n", -x, y, -z); file << -x << "," << y << "," << -z << endl;
-	*/
 
 	filei.close();
 	fileo.close();
@@ -348,10 +332,7 @@ int main(int argc, char **argv) {
 	string str3("Box");
 	string str4("Cone");
 	string str5("Patch");
-	
-	patch("teapot.patch", 5, "teapot.3d");
 
-	/*
 	if (argc > 1) {
 		
 		if (!str1.compare(argv[1])) {
@@ -377,6 +358,6 @@ int main(int argc, char **argv) {
 		}
 		else printf("Essa figura nao  possivel");
 	}
-	else printf("Nao ha argumentos suficientes");*/
+	else printf("Nao ha argumentos suficientes");
 	return 1;
 }
