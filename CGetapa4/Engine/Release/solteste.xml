@@ -1,0 +1,178 @@
+		<scene name="Sistema Solar">
+			<group name="Sun">
+				<scale X="1" Y="1" Z="1" />
+				<color R="1" G="0" B="1"/>
+				<models>
+					<model file="sphere.3d" />
+				</models>
+
+				<group name= "Mercurio">
+					<scale X="0.035" Y="0.035" Z="0.035" />
+					<translate X="4"   />
+					<rotate angle="45" X="1" Y="1" Z="1"/>
+        <color R="1" G="0" B="0.3"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+				</group>
+<group name= "Venus">
+					<scale X="0.086" Y="0.086" Z="0.086" />
+					<translate X="7"   />
+					<rotate angle="45" X="1" Y="1" Z="1"/>
+        <color R="0.6" G="0.4" B="0.3"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+				</group>
+				<group  name= "Terra">
+					<scale X="0.09" Y="0.09" Z="0.09" />
+					<translate X="12.16"  />
+            <color R="0" G="1" B="0"/>
+
+					<models>
+						<model file="sphere.3d" />
+					</models>
+
+					<group name="Lua">
+						<scale X="0.272" Y="0.272" Z="0.272" />
+						<translate X="0.7" Y="0.5" Z="0.7"  />
+  <color R="1" G="2" B="24"/>
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+				</group>
+
+				<group name= "Marte"> 
+					<translate X="10.46" />
+					<scale X="0.048" Y="0.048" Z="0.048" />
+					 <color R="9.6" G="0.4" B="0.3"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+				</group>
+
+				<group  name= "Jupiter">
+					<scale X="0.9" Y="0.9" Z="0.9" />
+					<translate X="35.9"  />
+					 <color R="3.6" G="0.4" B="0.0"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+
+
+					<group name="jLua1-Ganymede">
+						<scale X="0.038" Y="0.038" Z="0.038" />
+						<translate X="2" Y="5" Z="2"  />
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua2-Callisto">
+						<scale X="0.035" Y="0.035" Z="0.035" />
+						<translate X="-4" Y="4" Z="2"  />
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua3-Io">
+						<scale X="0.026" Y="0.026" Z="0.026" />
+						<translate X="2" Y="-3" Z="0"  />
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua4-Europa">
+						<scale X="0.022" Y="0.022" Z="0.022" />
+						<translate X="-4" Y="-4" Z="2"  />
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+				
+
+				</group>
+
+
+					<group  name= "Saturno">
+						<scale X="0.86" Y="0.86" Z="0.86" />
+						<translate X="89.9"  />
+						 <color R="0.6" G="6.4" B="0.1"/>
+						<models>
+							<model file="sphere.3d" />
+						</models>
+
+						<group name="sLua1-titan">
+							<scale X="0.042" Y="0.042" Z="0.042" />
+							<translate X="1" Y="2.5" Z="1"  />
+
+							<models>
+								<model file="sphere.3d" />
+							</models>
+						</group>
+
+
+
+					<group name="sLua2-Rhea">
+						<scale X="0.012" Y="0.012" Z="0.012" />
+						<translate X="-2" Y="2" Z="2"  />
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+			
+				<group name="sLua3-Kapetus">
+					<scale X="0.012" Y="0.012" Z="0.012" />
+					<translate X="1" Y="-1.5" Z="0"  />
+
+					<models>
+						<model file="sphere.3d" />
+					</models>
+				</group>
+
+			
+			<group name="sLua4-Dione">
+				<scale X="0.009" Y="0.009" Z="0.009" />
+				<translate X="-2" Y="-1" Z="2"  />
+				
+				<models>
+					<model file="sphere.3d" />
+				</models>
+			</group>
+
+		
+	
+		</group>
+
+	</group>
+
+	<group  name= "urano">
+		<scale X="0.36" Y="0.36" Z="0.36" />
+		<translate X="143.3"  />
+ <color R="3.6" G="3.4" B="0.3"/>
+		<models>
+			<model file="sphere.3d" />
+		</models>
+	</group>
+
+	<group  name= "Neptuno">
+		<scale X="0.35" Y="0.35" Z="0.35" />
+		<translate X="215.5"  />
+ <color R="0.6" G="3.4" B="3.3"/>
+		<models>
+			<model file="sphere.3d" />
+		</models>
+	</group>
+
+
+	</scene>

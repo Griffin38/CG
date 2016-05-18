@@ -1,0 +1,109 @@
+		<scene name="Sistema Solar">
+			<group name="Sun">
+				<scale X="1" Y="1" Z="1" />
+				<color R="1" G="0" B="1"/>
+				<models>
+					<model file="sphere.3d" />
+				</models>
+	<group  name= "Jupiter">
+			<scale X="0.9" Y="0.9" Z="0.9" />
+			<translate T="70"  > 
+			<Point X="35.9" Y="0" Z="0"/>
+			<Point X="25.38" Y="0" Z="-25.38"/>
+			<Point X="0" Y="0" Z="-35.9"/>
+			<Point X="-25.38" Y="0" Z="-25.38"/>
+			<Point X="-35.9" Y="0" Z="0"/>
+			<Point X="-25.38" Y="0" Z="25.38"/>
+			<Point X="0" Y="0" Z="35.9"/>
+			<Point X="25.38" Y="0" Z="25.38"/>
+		</translate>
+					 <color R="3.6" G="0.4" B="0.0"/>
+					<models>
+						<model file="sphere.3d" />
+					</models>
+
+
+					<group name="jLua1-Ganymede">
+						<scale X="0.038" Y="0.038" Z="0.038" />
+							<translate T="12"   >
+	
+<Point  X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+</translate>
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua2-Callisto">
+						<scale X="0.035" Y="0.035" Z="0.035" />
+							<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua3-Io">
+						<scale X="0.026" Y="0.026" Z="0.026" />
+								<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+					<group name="jLua4-Europa">
+						<scale X="0.022" Y="0.022" Z="0.022" />
+						<translate T="12"   >
+	
+<Point  X="0" Y="2" Z="0"/>
+<Point X="0" Y="2.5" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+<Point X="0" Y="-2.5" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="-2.4" Z="0"/>
+<Point X="0" Y="-2" Z="0"/>
+<Point X="0" Y="2" Z="0"/>
+</translate>
+
+						<models>
+							<model file="sphere.3d" />
+						</models>
+					</group>
+
+				
+
+				</group>
+
+
+
+		</group>		
+	</scene>

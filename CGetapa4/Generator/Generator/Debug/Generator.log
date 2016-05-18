@@ -1,0 +1,5 @@
+﻿  generator.cpp
+c:\users\manny\documents\github\cg\cgetapa3\generator\generator\generator.cpp(129): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\manny\documents\github\cg\cgetapa3\generator\generator\generator.cpp(134): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\manny\documents\github\cg\cgetapa3\generator\generator\generator.cpp(244): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generator.vcxproj -> C:\Users\Manny\Documents\GitHub\CG\CGetapa3\Generator\Debug\Generator.exe
