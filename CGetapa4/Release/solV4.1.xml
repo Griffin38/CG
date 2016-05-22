@@ -131,6 +131,7 @@
 					<models>
 						<model file="sphere.3d" texture="jupiter.jpg" />
 					</models>
+			
 
 
 					
@@ -155,6 +156,7 @@
 						<models>
 							<model file="sphere.3d" texture="saturno.jpg"/>
 						</models>
+
 </group>
 
 <group  name= "urano">
