@@ -1,0 +1,25 @@
+﻿  Engine.cpp
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(40): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(95): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(107): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(134): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(230): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(242): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(304): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(311): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(350): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(351): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(365): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(368): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(417): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(423): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(429): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(406): warning C4101: 'aux': unreferenced local variable
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(541): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(542): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(543): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(455): warning C4101: 'c': unreferenced local variable
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(686): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\documents\github\cg\cgetapa4\cgetapa2\engine.cpp(704): warning C4018: '<': signed/unsigned mismatch
+  CGetapa2.vcxproj -> C:\Users\Pedro\Documents\GitHub\CG\CGetapa4\Debug\CGetapa4.exe

@@ -173,6 +173,8 @@
     <Import Project="..\packages\tinyxml2.3.0.0\build\native\tinyxml2.targets" Condition="Exists('..\packages\tinyxml2.3.0.0\build\native\tinyxml2.targets')" />
     <Import Project="..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
+    <Import Project="..\packages\DevIL.redist.1.7.8\build\native\DevIL.redist.targets" Condition="Exists('..\packages\DevIL.redist.1.7.8\build\native\DevIL.redist.targets')" />
+    <Import Project="..\packages\DevIL.1.7.8\build\native\DevIL.targets" Condition="Exists('..\packages\DevIL.1.7.8\build\native\DevIL.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -184,5 +186,7 @@
     <Error Condition="!Exists('..\packages\tinyxml2.3.0.0\build\native\tinyxml2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\tinyxml2.3.0.0\build\native\tinyxml2.targets'))" />
     <Error Condition="!Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
+    <Error Condition="!Exists('..\packages\DevIL.redist.1.7.8\build\native\DevIL.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\DevIL.redist.1.7.8\build\native\DevIL.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\DevIL.1.7.8\build\native\DevIL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\DevIL.1.7.8\build\native\DevIL.targets'))" />
   </Target>
 </Project>

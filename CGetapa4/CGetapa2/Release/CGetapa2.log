@@ -1,43 +1,40 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (CGetapa2.vcxproj, CGetapa3.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  tinyxml2.cpp
   Engine.cpp
 Engine.cpp(40): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 Engine.cpp(76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(115): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(127): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(162): warning C4018: '<': signed/unsigned mismatch
-Engine.cpp(170): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(182): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(232): warning C4305: '+=': truncation from 'double' to 'float'
-Engine.cpp(239): warning C4305: '-=': truncation from 'double' to 'float'
-Engine.cpp(278): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(279): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Engine.cpp(293): warning C4305: '+=': truncation from 'double' to 'float'
-Engine.cpp(296): warning C4305: '-=': truncation from 'double' to 'float'
-Engine.cpp(345): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(351): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(357): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(334): warning C4101: 'aux': unreferenced local variable
-Engine.cpp(469): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(470): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(471): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Engine.cpp(383): warning C4101: 'c': unreferenced local variable
-Engine.cpp(560): warning C4101: 'elem': unreferenced local variable
-Engine.cpp(585): warning C4018: '<': signed/unsigned mismatch
+Engine.cpp(96): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(108): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(135): warning C4018: '<': signed/unsigned mismatch
+Engine.cpp(233): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(245): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(310): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(317): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(356): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(357): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Engine.cpp(371): warning C4305: '+=': truncation from 'double' to 'float'
+Engine.cpp(374): warning C4305: '-=': truncation from 'double' to 'float'
+Engine.cpp(430): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(436): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(442): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(413): warning C4101: 'aux': unreferenced local variable
+Engine.cpp(563): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(564): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(565): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Engine.cpp(477): warning C4101: 'c': unreferenced local variable
+Engine.cpp(711): warning C4018: '<': signed/unsigned mismatch
+Engine.cpp(730): warning C4018: '<': signed/unsigned mismatch
   Model.cpp
-Model.cpp(30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Model.cpp(31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Model.cpp(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Point.cpp
-  Rotate.cpp
-  Scalate.cpp
-  Transformation.cpp
-  Translate.cpp
-Translate.cpp(45): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Translate.cpp(46): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-Translate.cpp(47): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Type.cpp
+Model.cpp(88): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(89): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(90): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(93): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(94): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(95): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(97): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Model.cpp(98): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating code
-  All 742 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  3 of 746 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  CGetapa2.vcxproj -> C:\Users\Manny\Documents\GitHub\CG\CGetapa4\Release\CGetapa4.exe
+  CGetapa2.vcxproj -> C:\Users\Pedro\Documents\GitHub\CG\CGetapa4\Release\CGetapa4.exe

@@ -13,7 +13,7 @@
 #include"Model.h"
 
 
-
+#pragma comment(lib, "DevIL.lib")
 
 using namespace std;
 using namespace tinyxml2;
@@ -78,88 +78,82 @@ void renderCatmullRomCurve(vector<Point> pontos) {
 	}
 	glEnd();
 }
-//render scnene 
 
 
-void renderScene(void) {
-	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+//aux render model
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	gluLookAt(camX, camY, camZ,
-		posX, posY, posZ,
-		0.0f, 1.0f, 0.0f);
-
-	glTranslatef(xx, yy, zz);
-
-	glRotatef(angle, 0.0f, 1.0f, 0.0f);
-	int n_models = ListaM.size();
+void auxDraw(Model m) {
+	float res[3];
+	Transformation tfilho = m.getTransformacao();
 	
-	
-	
-	for (int i = 0; i < n_models; i++) {
-		
-		
-		Model mod = ListaM[i];
-		float res[3];
-		
-		Transformation tr = ListaM[i].getTransformacao();
+	if (!tfilho.trasnformacaoVazia()) {
 		glPushMatrix();
-		if (!tr.trasnformacaoVazia()) {	
 
-			Rotate r = tr.getRotacao();
-			if (!r.isEmpty() && r.getTime()!=0) {
-				float t = glutGet(GLUT_ELAPSED_TIME) % (int)(r.getTime() * 1000);
-				float gr = (t * 360) / (r.getTime() * 1000);
-			
-				glRotatef(gr, r.getX(), r.getY(), r.getZ());
-			}
-
-
-			Translate t = tr.getTranslacao();
-			if (!t.isEmpty() ) {
-				
-					int n = t.getSize();
-					if (n > 0) {
-						float r = glutGet(GLUT_ELAPSED_TIME) % (int)(t.getTime() * 1000);
-						float gt = r / (t.getTime() * 1000);
-						vector<Point> tp = t.getPontos();
-						//marca das órbitas
-						
-
-
-						renderCatmullRomCurve(t.getCurvas());
-						t.getGlobalCatmullRomPoint(gt, res, tp);
-				
- 						glTranslatef(res[0], res[1], res[2]);
-					}
-				}
-
-
-			
-			Scalate s = tr.getEscala();
-			if (!s.isEmpty()) {
-				
-				glScalef(s.getX(), s.getY(), s.getZ());
-			
-			}
-
-			Type tipo = tr.getCor();
-			if (!tipo.isEmpty()) {
-				glColor3f(tipo.getTX(), tipo.getTY(), tipo.getTZ());
+		Translate trans = tfilho.getTranslacao();
+		if (!trans.isEmpty()) {
+			int tam = trans.getSize();
+			if (tam > 0) {
+				float te = glutGet(GLUT_ELAPSED_TIME) % (int)(trans.getTime() * 1000);
+				float gt = te / (trans.getTime() * 1000);
+				vector<Point> vpt = trans.getPontos();
+				renderCatmullRomCurve(trans.getCurvas());
+				trans.getGlobalCatmullRomPoint(gt, res, vpt);
+				glTranslatef(res[0], res[1], res[2]);
 
 			}
 		}
-			
-		/*****/
+
+		Rotate rot = tfilho.getRotacao();
+		if (!rot.isEmpty()) {
+			float r = glutGet(GLUT_ELAPSED_TIME) % (int)(rot.getTime() * 1000);
+			float gr = (r * 360) / (rot.getTime() * 1000);
+			glRotatef(gr, rot.getX(), rot.getY(), rot.getZ());
+		}
+
+		Scalate esc = tfilho.getEscala();
+		if (!esc.isEmpty()) {
+			glScalef(esc.getX(), esc.getY(), esc.getZ());
+		}
 
 
+
+
+
+
+
+		m.draw();
+		glPopMatrix();
+
+	}
+
+}
+void auxrender(Model m) {
+
+	vector<Model> filhos = m.getFilhos();
+	
+
+	for (int k = 0; k < filhos.size(); k++) {
+
+		vector<Model> filhosf = filhos[k].getFilhos();
+		if(filhosf.size() != 0) {
+			auxrender(filhos[k]);
+		}else 
+		auxDraw(filhos[k]);
+	
+	}
+
+
+	auxDraw(m);
+
+}
+/*
 		if (ListaM[i].getFilhos().size() != 0){
 		vector<Model> filhos = mod.getFilhos();
+
+
 		for (int k = 0; k < filhos.size(); k++){
+
+
 		Transformation tfilho = filhos[k].getTransformacao();
 		if (!tfilho.trasnformacaoVazia()){
 		glPushMatrix();
@@ -196,23 +190,107 @@ void renderScene(void) {
 		filhos[k].draw();
 		
 	
-		/**********/
+		
 
 		glPopMatrix();
 		}
+		}*/
+
+//render scnene 
+
+
+void renderScene(void) {
+	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	gluLookAt(camX, camY, camZ,
+		posX, posY, posZ,
+		0.0f, 1.0f, 0.0f);
+
+	glTranslatef(xx, yy, zz);
+
+	glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	int n_models = ListaM.size();
+
+
+
+	for (int i = 0; i < n_models; i++) {
+
+
+		Model mod = ListaM[i];
+		float res[3];
+
+		Transformation tr = ListaM[i].getTransformacao();
+		glPushMatrix();
+		if (!tr.trasnformacaoVazia()) {
+		
+			Rotate r = tr.getRotacao();
+			if (!r.isEmpty() && r.getTime() != 0) {
+				float t = glutGet(GLUT_ELAPSED_TIME) % (int)(r.getTime() * 1000);
+				float gr = (t * 360) / (r.getTime() * 1000);
+
+				glRotatef(gr, r.getX(), r.getY(), r.getZ());
+			}
+
+
+			Translate t = tr.getTranslacao();
+			if (!t.isEmpty()) {
+
+				int n = t.getSize();
+				if (n > 0) {
+					float r = glutGet(GLUT_ELAPSED_TIME) % (int)(t.getTime() * 1000);
+					float gt = r / (t.getTime() * 1000);
+					vector<Point> tp = t.getPontos();
+					//marca das órbitas
+
+
+
+					renderCatmullRomCurve(t.getCurvas());
+					t.getGlobalCatmullRomPoint(gt, res, tp);
+
+					glTranslatef(res[0], res[1], res[2]);
+				}
+			}
+
+
+
+			Scalate s = tr.getEscala();
+			if (!s.isEmpty()) {
+
+				glScalef(s.getX(), s.getY(), s.getZ());
+
+			}
+
+			Type tipo = tr.getCor();
+			if (!tipo.isEmpty()) {
+				glColor3f(tipo.getTX(), tipo.getTY(), tipo.getTZ());
+
+			}
 		}
+
+		/*****/
+		if (mod.getFilhos().size() != 0) {
+			auxrender(mod);
+
+
+		}
+		glBindTexture(GL_TEXTURE_2D, mod.getTextID());
+			mod.draw();
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glPopMatrix();
+
+
 		
-		mod.draw();
-		glPopMatrix();
-		
-		
+
+
 	}
-
-
-
-	glutPostRedisplay();
-	glutSwapBuffers();
-}
+		glutPostRedisplay();
+		glutSwapBuffers();
+	}
 
 
 
@@ -328,39 +406,55 @@ void menu_op(int id_op) {
 	glutPostRedisplay();
 }
 
+
 int leituraM(string nome , Model& m) {
 
 
 	bool aux;
 	//LER FICHEIRO!!!!
-	string line, saux, delimiter  = ",";
+	string line, saux, delimiter  = ",",separator = "@";
 	ifstream file(nome);
-	int iaux;
+	int iaux,sep,niv = 0;
 	float x, y, z;
 
 	if (file.is_open()) {
 		while (getline(file, line)) {
-			iaux = line.find(delimiter);
-			saux = line.substr(0, iaux);
-			x= atof(saux.c_str());
-			line.erase(0, iaux + delimiter.length());
+
+			sep = line.find(separator);
+			if (!sep) {
+				niv++;
+			}
+			else {
+				iaux = line.find(delimiter);
+				saux = line.substr(0, iaux);
+				x = atof(saux.c_str());
+				line.erase(0, iaux + delimiter.length());
+
+
+				iaux = line.find(delimiter);
+				saux = line.substr(0, iaux);
+				y = atof(saux.c_str());
+				line.erase(0, iaux + delimiter.length());
+
+if(niv < 2 ){
+				iaux = line.find(delimiter);
+				saux = line.substr(0, iaux);
+				z = atof(saux.c_str());
+				line.erase(0, iaux + delimiter.length());
+
+
+				Point po(x, y, z);
+				if (!niv) {
+					m.adicionaPonto(po);
+				}
+				else m.adicionaNorma(po);
+}
+else { Point po(x, y, 0);  m.adicionaTextura(po); }
+
+
+				
+			}
 		
-
-			iaux = line.find(delimiter);
-			saux = line.substr(0, iaux);
-			y = atof(saux.c_str());
-			line.erase(0, iaux + delimiter.length());
-		
-
-			iaux = line.find(delimiter);
-			saux = line.substr(0, iaux);
-			z = atof(saux.c_str());
-			line.erase(0, iaux + delimiter.length());
-			
-
-			Point po(x,y,z);
-			m.adicionaPonto(po);
-
 			
 		}
 		file.close();
@@ -374,7 +468,7 @@ int leituraM(string nome , Model& m) {
 	
 }
 
-void Modelos(XMLElement* grupo, Transformation tdefault,int rel) {
+Model Modelos(XMLElement* grupo, Transformation tdefault) {
 	Transformation temp;
 	Type tipoN;
 	Rotate rN;
@@ -512,9 +606,12 @@ void Modelos(XMLElement* grupo, Transformation tdefault,int rel) {
 
 	//percorrer os modelos do filho 
 	Model m(grupo->Attribute("name"));
+	
 	for (XMLElement* modelo = grupo->FirstChildElement("models")->FirstChildElement("model"); modelo; modelo = modelo->NextSiblingElement("model")) {
 		
 		if (leituraM(modelo->Attribute("file"), m)) {
+			m.setImagem(modelo->Attribute("texture"));
+	
 			//escrever os modelos
 			m.setTransformacao(temp);
 			
@@ -522,47 +619,83 @@ void Modelos(XMLElement* grupo, Transformation tdefault,int rel) {
 			
 		}
 	}
-	//ver se tem mais filhos
+	
 
-	int desc = ListaM.size();
+	return m;
 
-	if (desc > 1 && rel == 1) {
-		ListaM[desc - 1].addFilho(m);
-	}
-	else {
-		ListaM.push_back(m);
-	}
 
-	if (grupo->FirstChildElement("group")) {
-		XMLElement *son = grupo->FirstChildElement("group");
-		cout << "processar filho " << son->Attribute("name") << endl;
-		Modelos(son, temp,1);
-	}
-	//ver se tem irmaos
-	if (grupo->NextSiblingElement("group")  ) {
-		XMLElement *brotha = grupo->NextSiblingElement("group");
-		cout << "processar irmao " << brotha->Attribute("name") << endl;
-		Modelos(brotha, tdefault,0);
-	}
+
 
 }
+
+void addFilhos(XMLElement* grupo, Model& m) {
+	if (grupo) {
+	Transformation t = m.getTransformacao();
+	Model p = Modelos(grupo, t);
+
+	if (grupo->FirstChildElement("group")) {
+
+		XMLElement *son = grupo->FirstChildElement("group");
+		cout << "processar filho df " << son->Attribute("name") << endl;
+
+		addFilhos(son, p);
+
+	}
+	m.addFilho(p);
+
+	if (grupo->NextSiblingElement("group")) {
+		XMLElement *brotha = grupo->NextSiblingElement("group");
+		cout << "processar irmao df " << brotha->Attribute("name") << endl;
+		addFilhos(brotha, m);
+	}
+}
+}
+void ModelosAll(XMLElement* grupo,Transformation t) {
+
+	
+/************************************************************************/
+	if (grupo) {
+		Model m = Modelos(grupo, t);
+
+
+
+		//ver se tem mais filhos
+		if (grupo->FirstChildElement("group")) {
+
+			XMLElement *son = grupo->FirstChildElement("group");
+			cout << "processar filho " << son->Attribute("name") << endl;
+
+			addFilhos(son, m);
+
+		}
+		ListaM.push_back(m);
+		//ver se tem irmaos
+		if (grupo->NextSiblingElement("group")) {
+			XMLElement *brotha = grupo->NextSiblingElement("group");
+			cout << "processar irmao " << brotha->Attribute("name") << endl;
+			ModelosAll(brotha, t);
+		}
+	}
+	/************************************************************************/
+}
+
 void lXML(string nome) {
 	
 	XMLDocument docxml;
 	cout << "A tentar ler  o ficheiro " << nome.c_str() << endl;
-	
-	int loadOkay = docxml.LoadFile(nome.c_str());
+	int loadOkay = docxml.LoadFile("solteste.xml");
+	//int loadOkay = docxml.LoadFile(nome.c_str());
 	if (!loadOkay)
 	{
 		cout << " A Ler o ficheiro " << nome.c_str() << endl;
 
 		XMLElement* root = docxml.RootElement(); //guarda em root o primeiro filho (neste caso com nome especificado como "scene");
-		XMLElement* elem;       //elem => elemento xml auxiliar para percorrer o documento (prзximo ciclo for)
 		Transformation t = Transformation::Transformation(); // transformaçao 
+		
 		
 		if (root != NULL) {
 			cout << "A começar a desenhar ->  " << root->Attribute("name") << endl;
-			Modelos(root->FirstChildElement("group"), t,0);  // manda o primeiro grupo para procurar os modelos 
+			ModelosAll(root->FirstChildElement("group"),t);  // manda o primeiro grupo para procurar os modelos 
 
 		}
 		
@@ -570,26 +703,39 @@ void lXML(string nome) {
 	else cout << "Nao foi encontrado o xml "<< loadOkay << endl; // nao existe o ficheiro
 }
 
+void prepFilhos(Model m) {
+
+	if (m.getFilhos().size() != 0) {
+		vector<Model> filhos = m.getFilhos();
+
+		for (int j = 0; j < filhos.size(); j++) {
+
+			prepFilhos(filhos[j]);
+		}
+	}
+	else { cout << "A iniciar VBO de: " <<m.getNomeModelo() << endl;  m.prep(); }
+	
+}
 void goVBO() {
 	int n = ListaM.size();
 
-	for (int i = 0; i < n; i++)
-		ListaM[i].prep();
-
-
+	
 
 	for (int i = 0; i < n; i++) {
 
-		if (ListaM[i].getFilhos().size() != 0) {
+			if (ListaM[i].getFilhos().size() != 0) {
+			cout << "whhhat" << endl;
 			vector<Model> filhos = ListaM[i].getFilhos();
+
 			for (int j = 0; j < filhos.size(); j++) {
-				filhos[j].prep();
+
+				prepFilhos(filhos[j]);
 			}
-			ListaM[i].setFilhos(filhos);
+			
 		}
-
+		cout << "A iniciar VBO de: " << ListaM[i].getNomeModelo() << endl;
 		ListaM[i].prep();
-
+		
 	}
 }
 int main(int argc, char **argv) {
@@ -602,6 +748,7 @@ int main(int argc, char **argv) {
 	glutCreateWindow("CG@DI-UM");
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
+
 	if (argc > 1) {
 
 			lXML(argv[1]);
@@ -629,10 +776,13 @@ int main(int argc, char **argv) {
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
 
-	//
+	//glew, Il e VBO
+	ilInit();
 	glewInit();
 	goVBO();
+	
 	// enter GLUT's main cycle
 	glutMainLoop();
 
