@@ -615,8 +615,8 @@ void lXML(string nome) {
 	
 	XMLDocument docxml;
 	cout << "A tentar ler  o ficheiro " << nome.c_str() << endl;
-	int loadOkay = docxml.LoadFile("solteste.xml");
-	//int loadOkay = docxml.LoadFile(nome.c_str());
+	
+	int loadOkay = docxml.LoadFile(nome.c_str());
 	if (!loadOkay)
 	{
 		cout << " A Ler o ficheiro " << nome.c_str() << endl;
