@@ -80,121 +80,8 @@ void renderCatmullRomCurve(vector<Point> pontos) {
 }
 
 
-//aux render model
-
-void auxDraw(Model m) {
-	float res[3];
-	Transformation tfilho = m.getTransformacao();
-	
-	if (!tfilho.trasnformacaoVazia()) {
-		glPushMatrix();
-
-		Translate trans = tfilho.getTranslacao();
-		if (!trans.isEmpty()) {
-			int tam = trans.getSize();
-			if (tam > 0) {
-				float te = glutGet(GLUT_ELAPSED_TIME) % (int)(trans.getTime() * 1000);
-				float gt = te / (trans.getTime() * 1000);
-				vector<Point> vpt = trans.getPontos();
-				renderCatmullRomCurve(trans.getCurvas());
-				trans.getGlobalCatmullRomPoint(gt, res, vpt);
-				glTranslatef(res[0], res[1], res[2]);
-
-			}
-		}
-
-		Rotate rot = tfilho.getRotacao();
-		if (!rot.isEmpty()) {
-			float r = glutGet(GLUT_ELAPSED_TIME) % (int)(rot.getTime() * 1000);
-			float gr = (r * 360) / (rot.getTime() * 1000);
-			glRotatef(gr, rot.getX(), rot.getY(), rot.getZ());
-		}
-
-		Scalate esc = tfilho.getEscala();
-		if (!esc.isEmpty()) {
-			glScalef(esc.getX(), esc.getY(), esc.getZ());
-		}
 
 
-
-
-
-
-
-		m.draw();
-		glPopMatrix();
-
-	}
-
-}
-void auxrender(Model m) {
-
-	vector<Model> filhos = m.getFilhos();
-	
-
-	for (int k = 0; k < filhos.size(); k++) {
-
-		vector<Model> filhosf = filhos[k].getFilhos();
-		if(filhosf.size() != 0) {
-			auxrender(filhos[k]);
-		}else 
-		auxDraw(filhos[k]);
-	
-	}
-
-
-	auxDraw(m);
-
-}
-/*
-		if (ListaM[i].getFilhos().size() != 0){
-		vector<Model> filhos = mod.getFilhos();
-
-
-		for (int k = 0; k < filhos.size(); k++){
-
-
-		Transformation tfilho = filhos[k].getTransformacao();
-		if (!tfilho.trasnformacaoVazia()){
-		glPushMatrix();
-		Translate trans = tfilho.getTranslacao();
-		if (!trans.isEmpty()){
-		int tam = trans.getSize();
-		if (tam > 0){
-		float te = glutGet(GLUT_ELAPSED_TIME) % (int)(trans.getTime() * 1000);
-		float gt = te / (trans.getTime() * 1000);
-		vector<Point> vpt = trans.getPontos();
-		renderCatmullRomCurve(trans.getCurvas());
-		trans.getGlobalCatmullRomPoint(gt, res, vpt);
-		glTranslatef(res[0], res[1], res[2]);
-
-		}
-		}
-
-		Rotate rot = tfilho.getRotacao();
-		if (!rot.isEmpty()){
-		float r = glutGet(GLUT_ELAPSED_TIME) % (int)(rot.getTime() * 1000);
-		float gr = (r * 360) / (rot.getTime() * 1000);
-		glRotatef(gr, rot.getX(), rot.getY(), rot.getZ());
-		}
-
-		Scalate esc = tfilho.getEscala();
-		if (!esc.isEmpty()){
-		glScalef(esc.getX(), esc.getY(), esc.getZ());
-		}
-		}
-
-	
-		
-		
-		filhos[k].draw();
-		
-	
-		
-
-		glPopMatrix();
-		}
-		}*/
 
 //render scnene 
 
@@ -273,14 +160,14 @@ void renderScene(void) {
 		}
 
 		/*****/
-		if (mod.getFilhos().size() != 0) {
-			
-			/**********************************/
-			vector<Model> filhos = mod.getFilhos();
-			for (size_t k = 0; k < filhos.size(); k++) {
+
+		if (ListaM[i].getFilhos().size() != 0) {
+			vector<Model> filhos = ListaM[i].getFilhos();
+			for (int k = 0; k < filhos.size(); k++) {
 				Transformation tfilho = filhos[k].getTransformacao();
+				glPushMatrix();
 				if (!tfilho.trasnformacaoVazia()) {
-					glPushMatrix();
+					
 					Translate trans = tfilho.getTranslacao();
 					if (!trans.isEmpty()) {
 						int tam = trans.getSize();
@@ -308,20 +195,20 @@ void renderScene(void) {
 					}
 				}
 
-			
-					glBindTexture(GL_TEXTURE_2D, filhos[k].getTextID());
-					
-					filhos[k].draw();
-					
-					glBindTexture(GL_TEXTURE_2D, 0);
-				
 
+				glBindTexture(GL_TEXTURE_2D, filhos[k].getTextID());
+
+				filhos[k].draw();
+				glBindTexture(GL_TEXTURE_2D, 0);
+
+				/**********/
 
 				glPopMatrix();
 			}
-			/****************************/
 		}
+
 		glBindTexture(GL_TEXTURE_2D, mod.getTextID());
+		
 			mod.draw();
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glPopMatrix();
@@ -549,7 +436,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			Rotate tt = tdefault.getRotacao();
 			rN = Rotate::Rotate(tt2, tx + tt.getX(), ty + tt.getY(), tz + tt.getZ());
 			temp.setRotacao(rN);
-
+			cout << "rot deu" << endl;
 		}
 
 		//scale *********************************************************************************************************************************
@@ -569,7 +456,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			Scalate tt = tdefault.getEscala();
 			sN = Scalate::Scalate(tx * tt.getX(), ty * tt.getY(), tz * tt.getZ());
 			temp.setEscala(sN);
-			
+			cout << "scal deu" << endl;
 		}
 		
 		
@@ -618,6 +505,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			tN = Translate::Translate(tt2, pontosAux, pontosAux.size());
 			tN.fazCurvas();
 			temp.setTranslacao(tN);
+			cout << "tran deu" << endl;
 		}
 
 	
@@ -674,6 +562,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 void addFilhos(XMLElement* grupo, Model& m) {
 	if (grupo) {
 	Transformation t = m.getTransformacao();
+	if (t.trasnformacaoVazia()) cout << "sl fodido" << endl; 
 	Model p = Modelos(grupo, t);
 
 	if (grupo->FirstChildElement("group")) {
