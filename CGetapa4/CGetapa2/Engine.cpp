@@ -274,9 +274,52 @@ void renderScene(void) {
 
 		/*****/
 		if (mod.getFilhos().size() != 0) {
-			auxrender(mod);
+			
+			/**********************************/
+			vector<Model> filhos = mod.getFilhos();
+			for (size_t k = 0; k < filhos.size(); k++) {
+				Transformation tfilho = filhos[k].getTransformacao();
+				if (!tfilho.trasnformacaoVazia()) {
+					glPushMatrix();
+					Translate trans = tfilho.getTranslacao();
+					if (!trans.isEmpty()) {
+						int tam = trans.getSize();
+						if (tam > 0) {
+							float te = glutGet(GLUT_ELAPSED_TIME) % (int)(trans.getTime() * 1000);
+							float gt = te / (trans.getTime() * 1000);
+							vector<Point> vpt = trans.getPontos();
+							renderCatmullRomCurve(trans.getCurvas());
+							trans.getGlobalCatmullRomPoint(gt, res, vpt);
+							glTranslatef(res[0], res[1], res[2]);
+
+						}
+					}
+
+					Rotate rot = tfilho.getRotacao();
+					if (!rot.isEmpty()) {
+						float r = glutGet(GLUT_ELAPSED_TIME) % (int)(rot.getTime() * 1000);
+						float gr = (r * 360) / (rot.getTime() * 1000);
+						glRotatef(gr, rot.getX(), rot.getY(), rot.getZ());
+					}
+
+					Scalate esc = tfilho.getEscala();
+					if (!esc.isEmpty()) {
+						glScalef(esc.getX(), esc.getY(), esc.getZ());
+					}
+				}
+
+			
+					glBindTexture(GL_TEXTURE_2D, filhos[k].getTextID());
+					
+					filhos[k].draw();
+					
+					glBindTexture(GL_TEXTURE_2D, 0);
+				
 
 
+				glPopMatrix();
+			}
+			/****************************/
 		}
 		glBindTexture(GL_TEXTURE_2D, mod.getTextID());
 			mod.draw();
@@ -703,19 +746,9 @@ void lXML(string nome) {
 	else cout << "Nao foi encontrado o xml "<< loadOkay << endl; // nao existe o ficheiro
 }
 
-void prepFilhos(Model m) {
-
-	if (m.getFilhos().size() != 0) {
-		vector<Model> filhos = m.getFilhos();
-
-		for (int j = 0; j < filhos.size(); j++) {
-
-			prepFilhos(filhos[j]);
-		}
-	}
-	else { cout << "A iniciar VBO de: " <<m.getNomeModelo() << endl;  m.prep(); }
 	
-}
+
+
 void goVBO() {
 	int n = ListaM.size();
 
@@ -729,9 +762,9 @@ void goVBO() {
 
 			for (int j = 0; j < filhos.size(); j++) {
 
-				prepFilhos(filhos[j]);
+				filhos[j].prep();
 			}
-			
+			ListaM[i].setFilhos(filhos);
 		}
 		cout << "A iniciar VBO de: " << ListaM[i].getNomeModelo() << endl;
 		ListaM[i].prep();

@@ -12,7 +12,9 @@
 	
 		
 	</group>
-	<group name= "Mercurio">
+	
+				
+<group name= "Mercurio">
 					<scale X="0.035" Y="0.035" Z="0.035" />
 					<translate T="30"   >
 			<Point X="6" Y="0" Z="0"/>
@@ -68,9 +70,26 @@
 						<model file="sphere.3d" texture="terra.jpg"/>
 					</models>
 
-		
-				</group>		
-				
+		<group name="Lua">
+						<scale X="0.272" Y="0.272" Z="0.272" />
+					<translate T="12"   >
+	
+			<Point  X="0" Y="3" Z="0"/>
+<Point X="0" Y="3.5" Z="0"/>
+<Point X="0" Y="3" Z="0"/>
+<Point X="0" Y="-3.5" Z="0"/>
+<Point X="0" Y="-3" Z="0"/>
+	<Point X="0" Y="-3.4" Z="0"/>
+	<Point X="0" Y="-1" Z="0"/>
+	<Point X="0" Y="2" Z="0"/>
+			
+		</translate>
 
+  						<color R="1" G="2" B="24"/>
+						<models>
+							<model file="sphere.3d" texture="lua.jpg"/>
+						</models>
+					</group>
+				</group>		
 
 	</scene>
