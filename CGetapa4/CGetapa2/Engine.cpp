@@ -571,7 +571,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 	
 	for (XMLElement* modelo = grupo->FirstChildElement("models")->FirstChildElement("model"); modelo; modelo = modelo->NextSiblingElement("model")) {
 		
-		if (leituraM(modelo->Attribute("file"), m)) {
+		if (leituraM(modelo->Attribute("file"), m) && m.getNomeModelo().compare("Cometa") != 0) {
 			m.setImagem(modelo->Attribute("texture"));
 			float dr = 1, dg = 1, db = 1;
 			if (modelo->Attribute("diffR")) {
@@ -590,6 +590,13 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 	
 			
 		}
+		else {
+			m.setTransformacao(temp);
+			
+
+			ListaM.push_back(m);
+		}
+
 	}
 	
 
