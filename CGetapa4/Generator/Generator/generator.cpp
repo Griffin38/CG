@@ -1,10 +1,12 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <GL/glut.h>
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -15,6 +17,8 @@ void plano(int lado,string nome) {
 
 	ofstream file(nome);
 	double x, y, z;
+
+
 	y = 0;
 
 	if (!(lado % 2))
@@ -29,6 +33,20 @@ void plano(int lado,string nome) {
 	printf("%f %f %f\n", -x, y, z); file << -x << "," << y << "," << z<<endl;
 	printf("%f %f %f\n", x, y, z); file << x << "," << y << "," << z<<endl;
 	printf("%f %f %f\n", -x, y, -z); file << -x << "," << y << "," << -z<<endl;
+	//normais
+	file << "@" << endl;
+	file << 0 << "," << 1 << "," << 0 << endl; file << 0 << "," << 1 << "," << 0 << endl;
+	file << 0 << "," << 1 << "," << 0 << endl; file << 0 << "," << 1 << "," << 0 << endl;
+	file << 0 << "," << 1 << "," << 0 << endl; file << 0 << "," << 1 << "," << 0 << endl;
+	//texturas
+	file << "@" << endl;
+	file << 0 << "," << 0 << endl; 
+	file << 0 << "," << 1 << endl;
+	file << 1 << "," << 0 << endl;
+	//2 triangulo
+	file << 0 << "," << 1 << endl;
+	file << 1 << "," << 1 << endl;
+	file << 1 << "," << 0 << endl;
 	
 	
 	file.close();
@@ -37,6 +55,9 @@ void plano(int lado,string nome) {
 void caixa(int x,int y , int z , string nome) {
 	ofstream file(nome);
 	double xx, yy, zz; 
+	vector<float> texturas;
+	vector<float> normais;
+
 	if (!(x % 2)) xx = x / 2; else xx = x / 2 + 0.5;
 	if (!(y % 2)) yy = y / 2; else yy = y / 2 + 0.5;
 	if (!(z % 2)) zz = z / 2; else zz = z / 2 + 0.5;
@@ -46,24 +67,56 @@ void caixa(int x,int y , int z , string nome) {
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", xx, yy, zz); file << xx << "," << yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, yy, zz); file << -xx << "," << yy << "," << zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	//textura
+	texturas.push_back(0.5); texturas.push_back(1);
+	texturas.push_back(0); texturas.push_back(1);
+	texturas.push_back(0.5); texturas.push_back(0.66);
 
 	
 	//2 triangulo
 	printf("%f %f %f\n", -xx, yy, -zz); file << -xx << "," << yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, -yy, zz); file << -xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(1);
+	//textura
+	texturas.push_back(0); texturas.push_back(1);
+	texturas.push_back(0); texturas.push_back(0.66);
+	texturas.push_back(0.5); texturas.push_back(0.66);
 	
 	//tras
 	//1 triangulo
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", xx, yy, zz); file << -xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, yy, zz); file << -xx << "," << yy << "," << -zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	//textura
+	texturas.push_back(1); texturas.push_back(0.66);
+	texturas.push_back(1); texturas.push_back(1);
+	texturas.push_back(0.5); texturas.push_back(1);
 
 
 	//2 triangulo
 	printf("%f %f %f\n", -xx, yy, -zz); file << -xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, -yy, zz); file << xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << -zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	normais.push_back(0); normais.push_back(0); normais.push_back(-1);
+	//textura
+	texturas.push_back(1); texturas.push_back(0.66);
+	texturas.push_back(0.5); texturas.push_back(1);
+	texturas.push_back(0.5); texturas.push_back(0.66);
 	
 	
 	//esquerda 
@@ -71,12 +124,28 @@ void caixa(int x,int y , int z , string nome) {
 	printf("%f %f %f\n", xx, -yy,-zz); file <<xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", xx, yy, -zz); file << xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", xx, yy, zz); file << xx << "," <<yy << "," << zz << endl;
+	//normal
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	//textura
+	texturas.push_back(0.5); texturas.push_back(0.33);
+	texturas.push_back(0.5); texturas.push_back(0.66);
+	texturas.push_back(0); texturas.push_back(0.66);
 	
 	
 	//2 triangulo
 	printf("%f %f %f\n", xx, yy, zz); file << xx << "," << yy << "," << zz << endl;
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n",xx, -yy,- zz); file << xx << "," << -yy << "," << -zz << endl;
+	//normal
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(1); normais.push_back(0); normais.push_back(0);
+	//textura
+	texturas.push_back(0.5); texturas.push_back(0.33);
+	texturas.push_back(0); texturas.push_back(0.66);
+	texturas.push_back(0); texturas.push_back(0.33);
 	
 	
 	
@@ -85,11 +154,27 @@ void caixa(int x,int y , int z , string nome) {
 	printf("%f %f %f\n", -xx, -yy, -zz); file << -xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, -yy, zz); file << -xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, yy, -zz); file << -xx << "," << yy << "," << -zz << endl;
+	//normal
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	//textura
+	texturas.push_back(1); texturas.push_back(0.33);
+	texturas.push_back(1); texturas.push_back(0.66);
+	texturas.push_back(0.5); texturas.push_back(0.66);
+
 	//2 triangulo
 	printf("%f %f %f\n", -xx, -yy, zz); file << -xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, yy, zz); file << -xx << "," << yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, yy, -zz); file << -xx << "," << yy << "," << -zz << endl;
-
+	//normal
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	normais.push_back(-1); normais.push_back(0); normais.push_back(0);
+	//textura
+	texturas.push_back(1); texturas.push_back(0.33);
+	texturas.push_back(0.5); texturas.push_back(0.66);
+	texturas.push_back(0.5); texturas.push_back(0.33);
 	
 	
 
@@ -100,10 +185,27 @@ void caixa(int x,int y , int z , string nome) {
 	printf("%f %f %f\n", xx, yy, -zz); file << xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, yy, zz); file << -xx << "," << yy << "," << zz << endl;
 	printf("%f %f %f\n", xx, yy, zz); file << xx << "," << yy << "," << zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	//textura
+	texturas.push_back(0.5); texturas.push_back(0);
+	texturas.push_back(0.5); texturas.push_back(0.33);
+	texturas.push_back(0); texturas.push_back(0.33);
+
 	//2 triangulo
 	printf("%f %f %f\n", xx, yy, -zz); file << xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, yy, -zz); file << -xx << "," << yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, yy, zz); file << -xx << "," << yy << "," << zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(1); normais.push_back(0);
+	//textura
+	texturas.push_back(0.5); texturas.push_back(0);
+	texturas.push_back(0); texturas.push_back(0.33);
+	texturas.push_back(0); texturas.push_back(0);
 
 	
 	//baixxo
@@ -111,13 +213,37 @@ void caixa(int x,int y , int z , string nome) {
 	printf("%f %f %f\n", xx, -yy, -zz); file << xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", xx, -yy, zz); file << xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, -yy, zz); file << -xx << "," << -yy << "," << zz << endl;
+	//normal
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	//textura
+	texturas.push_back(1); texturas.push_back(0);
+	texturas.push_back(1); texturas.push_back(0.33);
+	texturas.push_back(0.5); texturas.push_back(0.33);
 
 	//2 triangulo
 	printf("%f %f %f\n", xx, -yy, -zz); file << xx << "," << -yy << "," << -zz << endl;
 	printf("%f %f %f\n", -xx, -yy, zz); file << -xx << "," << -yy << "," << zz << endl;
 	printf("%f %f %f\n", -xx, -yy, -zz); file << -xx << "," << -yy << "," << -zz << endl;
-	
-	
+	//normal
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+	//textura
+	texturas.push_back(1); texturas.push_back(0);
+	texturas.push_back(0.5); texturas.push_back(0.33);
+	texturas.push_back(0.5); texturas.push_back(0);
+
+	file << "@" << endl;
+	for (int i = 0; i < normais.size(); i += 3) {
+		file << normais[i] << normais[i + 1] << normais[i + 2] << endl;
+	}
+
+	file << "@" << endl;
+	for (int i = 0; i < texturas.size(); i += 2) {
+		file << texturas[i] << texturas[i + 1] << endl;
+	}
 
 	file.close();
 }
@@ -127,17 +253,55 @@ void cone(int rr, int hr, int slice, int stack, string nome) {
 	ofstream file(nome);
 	float alfa;
 	float r = rr, h = hr;
-	float l = sqrt(pow(h, 2) + pow(r, 2)) / stack, t = r / stack;
+	float l = sqrt(pow(h, 2) + pow(r, 2)) / stack, t = r / stack, x, y, z;
+
+	vector<float> texturas;
+	vector<float> normais;
+
+	float texV = 0.7 / (float)slice; //mapeamento de textura
+	float texH = 1 / (float)stack; //mapeamento de textura
 
 	for (int i = 0; i < stack; i++) {		//CONE!!!
-		for (int j = 0; j < slice; j++) {
+		for (int j = 0; j < slice; j++) {			
+
 			alfa = j*(2 * M_PI) / slice;
+
+			x = r*sin(alfa)*cos(alfa + 2 * M_PI / slice);
+			y = r*sin(alfa + 2 * M_PI / slice);
+			z = r * cos(alfa)*cos(alfa + 2 * M_PI / slice);
+
 			if (i == 0) {
+				//texturas
+				texturas.push_back(0.15); texturas.push_back(0.15);
+				texturas.push_back(0.15 + 0.15*(sin(alfa))); texturas.push_back(0.15 + 0.15*(cos(alfa)));
+				texturas.push_back(0.15 + 0.15*(sin(alfa + 2 * M_PI / slice))); texturas.push_back(0.15 + 0.15*((cos(alfa + 2 * M_PI / slice))));
+
+				normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+				normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+				normais.push_back(0); normais.push_back(-1); normais.push_back(0);
+
 				file << 0.0f << "," << i*l << "," << 0.0f << endl;
 				file << r * (sin(alfa + 2 * M_PI / slice)) << "," << i*l << "," << r * cos(alfa + 2 * M_PI / slice) << endl;
 				file << r*(sin(alfa)) << "," << i*l << "," << r*cos(alfa) << endl;
 			}
 			if (i < stack - 1) {
+				//texturas
+				texturas.push_back(j*texV); texturas.push_back(i*texH);
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH);
+
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+				texturas.push_back(j*texV); texturas.push_back(i*texH);
+				texturas.push_back(j*texV); texturas.push_back(i*texH + texH);
+
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+
 				file << (r - ((i + 1)*t))*(sin(alfa + 2 * M_PI / slice)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t))*cos(alfa + 2 * M_PI / slice) << endl;
 				file << (r - ((i + 1)*t)) * (sin(alfa)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t)) * cos(alfa) << endl;
 				file << (r - (i*t)) * (sin(alfa)) << "," << i*l << "," << (r - (i*t)) * cos(alfa) << endl;
@@ -147,11 +311,37 @@ void cone(int rr, int hr, int slice, int stack, string nome) {
 				file << (r - ((i + 1)*t))*(sin(alfa + 2 * M_PI / slice)) << "," << (i + 1)*l << "," << (r - ((i + 1)*t))*cos(alfa + 2 * M_PI / slice) << endl;
 			}
 			else {
+				//texturas
+				texturas.push_back(j*texV); texturas.push_back(i*texH);
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH);
+
+				texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+				texturas.push_back(j*texV); texturas.push_back(i*texH);
+				texturas.push_back(j*texV); texturas.push_back(i*texH + texH);
+
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+				normais.push_back(x / r); normais.push_back(1); normais.push_back(y / r);
+
 				file << (r - (i*t)) * (sin(alfa)) << "," << i*l << "," << (r - (i*t)) * cos(alfa) << endl;
 				file << (r - (i*t))*(sin(alfa + 2 * M_PI / slice)) << "," << i*l << "," << (r - (i*t))*cos(alfa + 2 * M_PI / slice) << endl;
 				file << 0.0f << "," << (i + 1)*l << "," << 0.0f << endl;
 			}
 		}
+	}
+	file << "@" << endl;
+	for (int i = 0; i < normais.size(); i += 3) {
+		file << normais[i] << normais[i + 1] << normais[i + 2] << endl;
+	}
+
+	file << "@" << endl;
+	for (int i = 0; i < texturas.size(); i += 2) {
+		file << texturas[i] << texturas[i + 1] << endl;
 	}
 	
 	file.close();
@@ -162,47 +352,83 @@ void esfera(int r,int slice,int stack, string nome) {
 	double alfa, x, y, z;
 	int flag = 0;
 	double beta;
+	float texV = 1 / (float)slice; //mapeamento de textura
+	float texH = 1 / (float)stack; //mapeamento de textura
+
+	vector<float> texturas;
+	vector<float> normais;
+
 	for (int i = 0; i < stack; i++) {		//Esfera!!!
 		for (int j = 0; j < slice; j++) {
 
 			alfa = j*(2 * M_PI) / slice;
 			beta = -M_PI / 2 + i* M_PI / slice;
 
+			//texturas
+			
+			texturas.push_back(j*texV); texturas.push_back(i*texH);			
+			texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+			texturas.push_back(j*texV + texV); texturas.push_back(i*texH);								
+
+			texturas.push_back(j*texV + texV); texturas.push_back(i*texH + texH);
+			texturas.push_back(j*texV); texturas.push_back(i*texH);			
+			texturas.push_back(j*texV); texturas.push_back(i*texH + texH);
+
+
 			x = r*sin(alfa)*cos(beta);
 			y = r*sin(beta);
 			z = r * cos(alfa)*cos(beta);
-	
-			file << x << "," << y << "," << z << endl;
-			x = r*sin(alfa + 2 * M_PI / slice)*cos(beta);
 			
+			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
+
+			x = r*sin(alfa + 2 * M_PI / slice)*cos(beta);			
 			z = r * cos(alfa + 2 * M_PI / slice)*cos(beta);
 		
 			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
+
 			x = r*sin(alfa)*cos(beta + M_PI / slice);
 			y = r*sin(beta + M_PI / slice);
 			z = r * cos(alfa)*cos(beta + M_PI / slice);
 			
 
 			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
+
 			x = r*sin(alfa + 2 * M_PI / slice)*cos(beta + M_PI / slice);
 			z = r * cos(alfa + 2 * M_PI / slice)*cos(beta + M_PI / slice);
 	
 
 			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
 			x = r*sin(alfa)*cos(beta + M_PI / slice);
 			z = r * cos(alfa)*cos(beta + M_PI / slice);
 			
 
 			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
 			x = r*sin(alfa + 2 * M_PI / slice)*cos(beta);
 			y = r*sin(beta);
 			z = r * cos(alfa + 2 * M_PI / slice)*cos(beta);
 			
 
 			file << x << "," << y << "," << z << endl;
+			normais.push_back(x / r); normais.push_back(y / r); normais.push_back(z / r);
+			
 		}
 	}
+	file << "@" << endl;
 	
+	for (int i = 0; i < normais.size(); i += 3) {
+		file << normais[i] << "," << normais[i + 1] << "," << normais[i + 2] << endl;
+	}
+
+	file << "@" << endl;
+
+	for (int i = 0; i < texturas.size(); i += 2) {
+		file << texturas[i] << "," << texturas[i + 1] << endl;
+	}
 	
 	file.close();
 }

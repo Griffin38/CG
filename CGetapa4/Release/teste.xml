@@ -1,0 +1,9 @@
+
+	<scene name="Teste" >
+			<group name="Cenas" >
+				<scale X="1" Y="1" Z="1" />				
+				<models>
+					<model file="conet.3d" texture="sol.jpg"/>
+				</models>
+	    </group>
+	</scene>
