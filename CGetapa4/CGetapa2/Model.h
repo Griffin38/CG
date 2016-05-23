@@ -20,6 +20,7 @@ class Model {
 	unsigned int imag;
 	unsigned int textID;
 	unsigned char *imageData;
+	float diffR, diffG, diffB;
 public:
 	Model(string);
 	vector<Point> pontos;
@@ -31,7 +32,11 @@ public:
 	vector<Point> getTexturas() { return texturas; }
 	Transformation getTransformacao() { return transf; }
 	unsigned int getTextID() { return textID; }
+	float getdiffR() { return diffR; }
+	float getdiffG() { return diffG; }
+	float getdiffB() { return diffB; }
 	void setTransformacao(Transformation t) { transf = t; }
+	void Model::setDiffs(float dr, float dg, float db);
 	void adicionaPonto(Point p);
 	void adicionaNorma(Point p);
 	void adicionaTextura(Point p);
@@ -41,6 +46,8 @@ public:
 	void setFilhos(vector<Model> d) { descendentes = d; }
 	void Model::prep();
 	void Model::draw();
+	void Model::drawTeapot();
+	void Model::prepTeapot();
 	void Model::carregaImagem(string file);
 	virtual ~Model(void);
 };

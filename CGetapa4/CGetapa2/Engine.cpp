@@ -11,7 +11,7 @@
 #include"Transformation.h"
 #include"Point.h"
 #include"Model.h"
-
+#include"Luz.h"
 
 #pragma comment(lib, "DevIL.lib")
 
@@ -28,7 +28,7 @@ float camX = 0, camY = 0, camZ = 0, posX = 0, posY = 0, posZ = 0;
 int menu, wsizex = 800, wsizey = 400;
 
 vector<Model> ListaM;
-
+Luz luz;
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -93,7 +93,7 @@ void renderScene(void) {
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	
 	gluLookAt(camX, camY, camZ,
 		posX, posY, posZ,
 		0.0f, 1.0f, 0.0f);
@@ -102,14 +102,36 @@ void renderScene(void) {
 
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	int n_models = ListaM.size();
-
+	GLfloat lx, ly, lz,dr, dg, db;
+	lx = luz.getPosX(); ly = luz.getPosY(); lz = luz.getPosZ();
 
 
 	for (int i = 0; i < n_models; i++) {
 
-
 		Model mod = ListaM[i];
 		float res[3];
+		dr = mod.getdiffR(); dg = mod.getdiffG(); db = mod.getdiffB();
+		if (i == 0) {
+
+			GLfloat pos[4] = { lx, ly, lz, 7 };
+			GLfloat amb[3] = { 1.0, 1.0, 1.0 };
+			GLfloat diff[3] = { dr, dg, db };
+			GLfloat matt[3] = { 1, 1, 1 };
+
+			glLightfv(GL_LIGHT0, GL_POSITION, pos); // posição da luz
+			glLightfv(GL_LIGHT0, GL_AMBIENT, amb); // cores da luz
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff); // cores da luz
+
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, matt);
+		}
+		else {
+			GLfloat diff[3] = { dr, dg, db };
+			GLfloat matt[3] = { 0, 0, 0 };
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, matt);
+		}
+
+		
+		
 
 		Transformation tr = ListaM[i].getTransformacao();
 		glPushMatrix();
@@ -197,8 +219,9 @@ void renderScene(void) {
 
 
 				glBindTexture(GL_TEXTURE_2D, filhos[k].getTextID());
-
+				glEnable(GL_LIGHTING);
 				filhos[k].draw();
+				glDisable(GL_LIGHTING);
 				glBindTexture(GL_TEXTURE_2D, 0);
 
 				/**********/
@@ -206,11 +229,17 @@ void renderScene(void) {
 				glPopMatrix();
 			}
 		}
-
+		if (mod.getNomeModelo().compare("Cometa") == 0) {
+			glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+			mod.drawTeapot();
+		}else{
 		glBindTexture(GL_TEXTURE_2D, mod.getTextID());
-		
-			mod.draw();
-			glBindTexture(GL_TEXTURE_2D, 0);
+		glEnable(GL_LIGHTING);
+		mod.draw();
+		glDisable(GL_LIGHTING);
+			
+		glBindTexture(GL_TEXTURE_2D, 0);
+		}
 			glPopMatrix();
 
 
@@ -433,10 +462,10 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			if (filho->Attribute("T") == NULL) { tt2 = 0; }
 			else { tz = stof(filho->Attribute("T")); }
 
-			Rotate tt = tdefault.getRotacao();
-			rN = Rotate::Rotate(tt2, tx + tt.getX(), ty + tt.getY(), tz + tt.getZ());
+			
+			rN = Rotate::Rotate(tt2, tx, ty , tz );
 			temp.setRotacao(rN);
-			cout << "rot deu" << endl;
+			
 		}
 
 		//scale *********************************************************************************************************************************
@@ -456,7 +485,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			Scalate tt = tdefault.getEscala();
 			sN = Scalate::Scalate(tx * tt.getX(), ty * tt.getY(), tz * tt.getZ());
 			temp.setEscala(sN);
-			cout << "scal deu" << endl;
+			
 		}
 		
 		
@@ -488,15 +517,17 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 				if (ponto->Attribute("Z")) {
 					tz = stof(ponto->Attribute("Z"));
 				}
-				Translate tt = tdefault.getTranslacao();
+			/*	Translate tt = tdefault.getTranslacao();
 				if (!tt.isEmpty()) {
 					tx = tx + tt.getPontos().at(i).getX();
 					ty = ty + tt.getPontos().at(i).getY();
 					tz = tz + tt.getPontos().at(i).getZ();
-				
+
+
+
 					i++;
+				}*/
 				
-				}
 				
 				Point p = Point::Point(tx, ty, tz);
 				pontosAux.push_back(p);
@@ -505,7 +536,7 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 			tN = Translate::Translate(tt2, pontosAux, pontosAux.size());
 			tN.fazCurvas();
 			temp.setTranslacao(tN);
-			cout << "tran deu" << endl;
+			
 		}
 
 	
@@ -542,7 +573,17 @@ Model Modelos(XMLElement* grupo, Transformation tdefault) {
 		
 		if (leituraM(modelo->Attribute("file"), m)) {
 			m.setImagem(modelo->Attribute("texture"));
-	
+			float dr = 1, dg = 1, db = 1;
+			if (modelo->Attribute("diffR")) {
+				dr = stof(modelo->Attribute("diffR"));
+			}
+			if (modelo->Attribute("diffG")) {
+				dg = stof(modelo->Attribute("diffG"));
+			}
+			if (modelo->Attribute("diffB")) {
+				db = stof(modelo->Attribute("diffB"));
+			}
+			m.setDiffs(dr, dg, db);
 			//escrever os modelos
 			m.setTransformacao(temp);
 			
@@ -626,6 +667,22 @@ void lXML(string nome) {
 		
 		
 		if (root != NULL) {
+
+			XMLElement* luzes =root->FirstChildElement("luz");
+			if (luzes != NULL) {
+				XMLElement* l = luzes->FirstChildElement("light");
+				string tipo = "POINT";
+				float x = 0, y = 0, z = 0;
+				if (l->Attribute("tipo")) { tipo = l->Attribute("tipo"); }
+				if (l->Attribute("posX")) { x = stof(l->Attribute("posX")); }
+				if (l->Attribute("posY")) { y = stof(l->Attribute("posY")); }
+				if (l->Attribute("posZ")) { z = stof(l->Attribute("posZ")); }
+
+				luz = Luz::Luz(x, y, z, tipo);
+			}
+			else {
+				luz = Luz::Luz(0, 0, 0, "POINT");
+			}
 			cout << "A começar a desenhar ->  " << root->Attribute("name") << endl;
 			ModelosAll(root->FirstChildElement("group"),t);  // manda o primeiro grupo para procurar os modelos 
 
@@ -656,7 +713,13 @@ void goVBO() {
 			ListaM[i].setFilhos(filhos);
 		}
 		cout << "A iniciar VBO de: " << ListaM[i].getNomeModelo() << endl;
-		ListaM[i].prep();
+		if (ListaM[i].getNomeModelo().compare("Cometa") == 0) {
+			ListaM[i].prepTeapot();
+		}
+		else {
+			ListaM[i].prep();
+		}
+		
 		
 	}
 }
@@ -699,7 +762,8 @@ int main(int argc, char **argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	//glew, Il e VBO
 	ilInit();
 	glewInit();

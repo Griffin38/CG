@@ -75,16 +75,16 @@
 	
 		<group name="Lua">
 						<scale X="2" Y="3" Z="2" />
-					<translate T="12"   >
+							<translate T="12"   >
 	
-			<Point  X="0" Y="3" Z="0"/>
-<Point X="0" Y="3.5" Z="0"/>
-<Point X="0" Y="3" Z="0"/>
-<Point X="0" Y="-3.5" Z="0"/>
-<Point X="0" Y="-3" Z="0"/>
-	<Point X="0" Y="-3.4" Z="0"/>
-	<Point X="0" Y="-1" Z="0"/>
-	<Point X="0" Y="2" Z="0"/>
+			<Point  X="0" Y="13" Z="0"/>
+<Point X="0" Y="0.1" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
+	<Point X="0" Y="0" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
 			
 		</translate>
 
@@ -137,6 +137,25 @@
 			
 
 
+				<group name="jLua1-Ganymede">
+						<scale X="0.038" Y="0.038" Z="0.038" />
+							<translate T="151"   >
+	
+			<Point  X="0" Y="13" Z="0"/>
+<Point X="0" Y="0.1" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
+	<Point X="0" Y="0" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
+			
+		</translate>
+
+						<models>
+							<model file="sphere.3d" texture="lua.jpg" />
+						</models>
+					</group>	
 					
 
 				
@@ -159,6 +178,25 @@
 						<models>
 							<model file="sphere.3d" texture="saturno.jpg"/>
 						</models>
+<group name="sLua1-titan">
+							<scale X="0.042" Y="0.042" Z="0.042" />
+					<translate T="151"   >
+	
+			<Point  X="0" Y="13" Z="0"/>
+<Point X="0" Y="0.1" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+<Point X="0" Y="0.3" Z="0"/>
+<Point X="0" Y="0.2" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
+	<Point X="0" Y="0" Z="0"/>
+	<Point X="0" Y="0.1" Z="0"/>
+			
+		</translate>
+
+							<models>
+								<model file="sphere.3d" texture="lua.jpg" />
+							</models>
+						</group>
 
 </group>
 
@@ -178,6 +216,8 @@
 		<models>
 			<model file="sphere.3d" texture="urano.jpg"/>
 		</models>
+
+			
 	</group>
 
 	<group  name= "Neptuno">
